@@ -45,3 +45,51 @@ TASK:
 Test cloud processing.
 ---
 
+---
+[2026-02-17 07:36:18Z] PLAN FILE: inbox-test_Plan.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-17 07:36:18Z] FILE: inbox-test.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-17 07:36:18Z] PLAN FILE: manual_20260217_073614_1_Plan.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-17 07:36:18Z] FILE: manual_20260217_073614_1.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-17 07:36:18Z] PLAN FILE: manual_20260217_073614_2_Plan.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-17 07:36:18Z] FILE: manual_20260217_073614_2.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
