@@ -3,10 +3,10 @@ name: Silver Agent (Cloud Run)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/10 * * * *"   # every 10 minutes
 
 permissions:
-  contents: write
+  contents: write   # ✅ allow bot to commit & push changes
 
 jobs:
   run-silver:
@@ -24,25 +24,31 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install Dependencies (if any)
+      - name: Install Dependencies
         run: |
-          python --version
-          ls -la
+          python -m pip install --upgrade pip
+          pip install openai
 
-      - name: Run Silver Agent
+      - name: Run Silver Agent (Cloud)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "Cloud Agent Started"
           python agent.py
 
-      - name: Commit & Push changes back to repo
+      - name: Commit & Push Results (if changed)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add -A
+          # add only what can change
+          git add Done run_log.md Needs_Action || true
 
-          # If no changes, don't fail
-          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          # commit only if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
 
-          git commit -m "Cloud: processed tasks via silver agent"
+          git commit -m "Cloud: processed tasks via Silver agent"
           git push
