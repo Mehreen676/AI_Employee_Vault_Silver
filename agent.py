@@ -1,4 +1,4 @@
-"""Silver Cloud Agent – processes Needs_Action/*.md tasks."""
+"""Silver Cloud Agent – MCP-integrated version."""
 
 from __future__ import annotations
 
@@ -6,13 +6,16 @@ import os
 from pathlib import Path
 from datetime import datetime, timezone
 
-# --------------- Optional OpenAI import ---------------
+# -------- OpenAI --------
 try:
     from openai import OpenAI
 except Exception:
     OpenAI = None  # type: ignore
 
-# --------------- Paths ---------------
+# -------- MCP Tools --------
+from mcp_server import list_tasks, move_task
+
+# -------- Paths --------
 BASE_DIR = Path(__file__).resolve().parent
 NEEDS_ACTION = BASE_DIR / "Needs_Action"
 DONE = BASE_DIR / "Done"
@@ -23,13 +26,12 @@ MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 MAX_CHARS = int(os.getenv("MAX_TASK_CHARS", "6000"))
 
 
-# --------------- Helpers ---------------
+# -------- Helpers --------
 def utc_ts() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
 
 
 def append_line(path: Path, text: str) -> None:
-    """Append text to a file, creating it if needed."""
     with open(path, "a", encoding="utf-8") as f:
         f.write(text)
 
@@ -37,14 +39,13 @@ def append_line(path: Path, text: str) -> None:
 def build_prompt(task_text: str) -> str:
     return (
         "You are an AI employee. Summarize the task clearly in 3-6 bullet points.\n"
-        "Then write a short \"Next actions\" section (1-3 bullets).\n"
+        "Then write a short 'Next actions' section (1-3 bullets).\n"
         "Keep it concise. Do NOT invent details.\n\n"
         f"TASK:\n{task_text[:MAX_CHARS]}"
     )
 
 
 def openai_summarize(prompt: str) -> tuple[str, str]:
-    """Call OpenAI to summarize. Returns (summary_text, status_note)."""
     api_key = os.getenv("OPENAI_API_KEY", "").strip()
 
     if not api_key or OpenAI is None:
@@ -58,46 +59,44 @@ def openai_summarize(prompt: str) -> tuple[str, str]:
         resp = client.chat.completions.create(
             model=MODEL,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=1024,
+            max_tokens=800,
         )
-        summary_text = resp.choices[0].message.content.strip()
-        if not summary_text:
+        text = resp.choices[0].message.content.strip()
+        if not text:
             return ("Summary generated but empty response.", "openai_empty")
-        return (summary_text, "openai_ok")
+        return (text, "openai_ok")
     except Exception as e:
         return (f"(OpenAI error fallback) {e}", "openai_error")
 
 
-# --------------- Main ---------------
+# -------- Main --------
 def main() -> None:
-    print("=== Silver Cloud Agent Running ===")
+    print("=== Silver MCP Agent Running ===")
 
-    # Ensure folders exist
     NEEDS_ACTION.mkdir(parents=True, exist_ok=True)
     DONE.mkdir(parents=True, exist_ok=True)
 
-    # Ensure log files exist
     if not RUN_LOG.exists():
         RUN_LOG.write_text("# Run Log\n\n", encoding="utf-8")
     if not PROMPT_HISTORY.exists():
         PROMPT_HISTORY.write_text("# Prompt History\n\n", encoding="utf-8")
 
-    files = sorted(NEEDS_ACTION.glob("*.md"))
-    # Skip .gitkeep
-    files = [f for f in files if f.name != ".gitkeep"]
+    # 🔥 MCP TOOL USED HERE
+    file_names = list_tasks(NEEDS_ACTION)
 
-    if not files:
+    if not file_names:
         print("No tasks found in Needs_Action/.")
         append_line(RUN_LOG, f"{utc_ts()} - No tasks found.\n")
         print("=== Done ===")
         return
 
-    for file_path in files:
+    for name in file_names:
+        file_path = NEEDS_ACTION / name
         original = file_path.read_text(encoding="utf-8", errors="ignore").strip()
+
         prompt = build_prompt(original)
         summary, status = openai_summarize(prompt)
 
-        # Build output for Done/
         output = (
             "# Processed Task\n\n"
             "## Original Content\n"
@@ -107,29 +106,22 @@ def main() -> None:
             "Status: Completed\n"
         )
 
-        # Write processed file into Done/
-        dest = DONE / file_path.name
+        # Write processed output
+        dest = DONE / name
         dest.write_text(output, encoding="utf-8")
 
-        # Remove from Needs_Action
-        file_path.unlink()
+        # 🔥 MCP TOOL USED HERE
+        move_task(file_path, dest)
 
-        # Append run_log.md
-        append_line(RUN_LOG, f"{utc_ts()} - Processed: {file_path.name} | {status}\n")
+        append_line(RUN_LOG, f"{utc_ts()} - Processed: {name} | {status}\n")
 
-        # Append prompt_history.md
-        prompt_or_fallback = "fallback" if status == "fallback" else prompt
-        prompt_block = (
-            f"---\n"
-            f"[{utc_ts()}] FILE: {file_path.name}\n"
-            f"MODEL: {MODEL}\n"
-            f"STATUS: {status}\n"
-            f"PROMPT:\n{prompt_or_fallback}\n"
-            f"---\n\n"
+        prompt_log = "fallback" if status == "fallback" else prompt
+        append_line(
+            PROMPT_HISTORY,
+            f"---\n[{utc_ts()}] FILE: {name}\nMODEL: {MODEL}\nSTATUS: {status}\nPROMPT:\n{prompt_log}\n---\n\n",
         )
-        append_line(PROMPT_HISTORY, prompt_block)
 
-        print(f"Processed: {file_path.name} ({status})")
+        print(f"Processed: {name} ({status})")
 
     print("=== Done ===")
 
