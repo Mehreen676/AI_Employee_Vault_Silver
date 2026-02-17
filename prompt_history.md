@@ -32,3 +32,16 @@ PROMPT:
 fallback
 ---
 
+---
+[2026-02-17 06:43:20Z] FILE: demo.md
+MODEL: gpt-4o-mini
+STATUS: openai_ok
+PROMPT:
+You are an AI employee. Summarize the task clearly in 3-6 bullet points.
+Then write a short "Next actions" section (1-3 bullets).
+Keep it concise. Do NOT invent details.
+
+TASK:
+Test cloud processing.
+---
+
