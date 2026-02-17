@@ -3,10 +3,14 @@ name: Silver Agent (Cloud Run)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/10 * * * *"   # every 10 minutes
+    - cron: "*/10 * * * *" # every 10 minutes
 
 permissions:
-  contents: write   # ✅ allow bot to commit & push changes
+  contents: write
+
+concurrency:
+  group: silver-agent
+  cancel-in-progress: true
 
 jobs:
   run-silver:
@@ -27,7 +31,11 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install openai
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install openai
+          fi
 
       - name: Run Silver Agent (Cloud)
         env:
@@ -41,10 +49,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # add only what can change
-          git add Done run_log.md Needs_Action || true
+          # ensure folders exist (avoid git add failing)
+          mkdir -p Done Needs_Action
 
-          # commit only if there are changes
+          # add outputs (Done + log + keepfile)
+          git add Done run_log.md Needs_Action/.gitkeep 2>/dev/null || true
+
+          # commit only if there are staged changes
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
