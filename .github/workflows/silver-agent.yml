@@ -3,14 +3,21 @@ name: Silver Agent (Cloud Run)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/10 * * * *"   # every 10 minutes
+    - cron: "*/10 * * * *"
+
+permissions:
+  contents: write
 
 jobs:
   run-silver:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -22,8 +29,20 @@ jobs:
           python --version
           ls -la
 
-      - name: Run Silver Processor (Cloud)
+      - name: Run Silver Agent
         run: |
           echo "Cloud Agent Started"
           python agent.py
-          echo "Cloud run proof OK"
+
+      - name: Commit & Push changes back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          # If no changes, don't fail
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+
+          git commit -m "Cloud: processed tasks via silver agent"
+          git push
