@@ -2,11 +2,12 @@ name: Silver Agent (Cloud Run)
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"   # every 10 minutes
 
 jobs:
   run-silver:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -16,12 +17,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install Dependencies
+      - name: Install Dependencies (if any)
         run: |
-          pip install -r requirements.txt || echo "No requirements"
+          python --version
+          ls -la
 
       - name: Run Silver Processor (Cloud)
         run: |
           echo "Cloud Agent Started"
           python processor.py
-          echo "Cloud Agent Finished"
+          echo "Cloud run proof OK"
