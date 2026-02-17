@@ -25,5 +25,5 @@ jobs:
       - name: Run Silver Processor (Cloud)
         run: |
           echo "Cloud Agent Started"
-          python processor.py
+          python agent.py
           echo "Cloud run proof OK"
