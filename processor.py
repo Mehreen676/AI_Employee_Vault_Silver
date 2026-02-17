@@ -1,29 +1,39 @@
 import os
 import shutil
 from datetime import datetime
+from pathlib import Path
 
-VAULT_PATH = r"C:\Users\Zohair\Desktop\AI_Employee_Vault"
+# ✅ Cross-platform vault root:
+# - Cloud (GitHub Actions) me: repo root
+# - Local me: current folder (same repo)
+BASE_DIR = Path(__file__).resolve().parent
 
-NEEDS_ACTION = os.path.join(VAULT_PATH, "Needs_Action")
-DONE = os.path.join(VAULT_PATH, "Done")
-SKILL_FILE = os.path.join(VAULT_PATH, "skills", "process_task.SKILL.md")
-LOG_FILE = os.path.join(VAULT_PATH, "run_log.md")
+NEEDS_ACTION = BASE_DIR / "Needs_Action"
+DONE = BASE_DIR / "Done"
+SKILL_FILE = BASE_DIR / "skills" / "process_task.SKILL.md"
+LOG_FILE = BASE_DIR / "run_log.md"
 
 print("===================================")
 print(" AI Employee Processor (Skill Mode)")
 print("===================================\n")
 
+def ensure_dirs():
+    NEEDS_ACTION.mkdir(parents=True, exist_ok=True)
+    DONE.mkdir(parents=True, exist_ok=True)
+    (BASE_DIR / "skills").mkdir(parents=True, exist_ok=True)
+
 def load_skill():
-    if os.path.exists(SKILL_FILE):
-        with open(SKILL_FILE, "r", encoding="utf-8") as f:
-            return f.read()
+    if SKILL_FILE.exists():
+        return SKILL_FILE.read_text(encoding="utf-8")
     return "No skill definition found."
 
-def log_run(filename):
+def log_run(filename: str):
     with open(LOG_FILE, "a", encoding="utf-8") as log:
-        log.write(f"\n[{datetime.now()}] Skill executed on: {filename}\n")
+        log.write(f"\n[{datetime.utcnow().strftime('%Y-%m-%d %H:%M:%SZ')}] Skill executed on: {filename}\n")
 
-skill_definition = load_skill()
+ensure_dirs()
+
+skill_definition = load_skill()  # (Silver: keep for future use)
 files = os.listdir(NEEDS_ACTION)
 
 if not files:
@@ -31,13 +41,11 @@ if not files:
 else:
     for file in files:
         if file.endswith(".md"):
-            file_path = os.path.join(NEEDS_ACTION, file)
+            file_path = NEEDS_ACTION / file
 
-            with open(file_path, "r", encoding="utf-8") as f:
-                content = f.read()
+            content = file_path.read_text(encoding="utf-8", errors="ignore")
 
-            summary = f"""
-# Processed Task
+            summary = f"""# Processed Task
 
 ## Skill Used
 process_task.SKILL.md
@@ -51,10 +59,9 @@ This task has been processed according to the defined Agent Skill workflow.
 Status: Completed
 """
 
-            with open(file_path, "w", encoding="utf-8") as f:
-                f.write(summary)
+            file_path.write_text(summary, encoding="utf-8")
 
-            shutil.move(file_path, os.path.join(DONE, file))
+            shutil.move(str(file_path), str(DONE / file))
             log_run(file)
 
             print(f"Skill processed and moved: {file}")
