@@ -178,8 +178,52 @@ Logging & analytics dashboard
 Mehreen Asghar
 Hackathon 0 — Bronze Tier Submission
 
+## How to Demo Silver
+
+### Prerequisites
+- Python 3.11+
+- `pip install -r requirements.txt`
+- (Optional) Set `OPENAI_API_KEY` env var for real AI summaries
+
+### Local Demo Steps
+
+1. **Drop a task file** into `Needs_Action/`:
+   ```
+   echo "Summarize Q4 sales data" > Needs_Action/demo-task.md
+   ```
+
+2. **Run the agent**:
+   ```
+   python agent.py
+   ```
+
+3. **Verify outputs**:
+   - `Done/demo-task.md` — contains `# Processed Task`, `## Original Content`, `## AI Summary`, and `Status: Completed`
+   - `run_log.md` — new line with UTC timestamp, filename, and status
+   - `prompt_history.md` — full prompt log (or "fallback" if no API key)
+
+4. **Run again with empty queue** — agent prints "No tasks found" and exits cleanly (no crash).
+
+### Cloud Demo (GitHub Actions)
+- Push a `.md` file into `Needs_Action/` and commit.
+- Go to **Actions > Silver Agent (Cloud Run) > Run workflow** (or wait for the 10-min cron).
+- The bot commits processed results back automatically.
+
+### What the Judge Sees
+| Check | Evidence |
+|-------|----------|
+| Reads from `Needs_Action/*.md` | `agent.py` line 86 |
+| OpenAI summarization (with key) | `agent.py` line 57-69 |
+| Graceful fallback (no key/crash) | `agent.py` line 51-55 |
+| Output format in `Done/` | `# Processed Task` > `## Original Content` > `## AI Summary` > `Status: Completed` |
+| `run_log.md` updated | UTC timestamp + filename + status per run |
+| `prompt_history.md` updated | Full prompt or "fallback" logged per file |
+| GitHub Actions every 10 min | `.github/workflows/silver-agent.yml` cron |
+| No infinite loop | Workflow triggers: `schedule` + `workflow_dispatch` only (no `push`) |
+
 🏁 Final Status
 
 🟢 Bronze Tier: Fully Implemented
+🟢 Silver Tier: Fully Implemented
 🟢 PDF Requirements: 100% Covered
 🟢 End-to-End Workflow: Verified

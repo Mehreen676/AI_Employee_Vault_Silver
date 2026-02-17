@@ -1,7 +1,7 @@
 # Processed Task
 
 ## Original Content
-Make a short summary + next actions for Silver submission.
+Prepare quarterly report with revenue data from Q4 2025. Include charts and executive summary.
 
 ## AI Summary
 Silver Agent processed this task. (fallback: OpenAI not configured)
