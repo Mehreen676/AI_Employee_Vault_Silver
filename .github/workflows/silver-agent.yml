@@ -1,0 +1,27 @@
+name: Silver Agent (Cloud Run)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-silver:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt || echo "No requirements"
+
+      - name: Run Silver Processor (Cloud)
+        run: |
+          echo "Cloud Agent Started"
+          python processor.py
+          echo "Cloud Agent Finished"
