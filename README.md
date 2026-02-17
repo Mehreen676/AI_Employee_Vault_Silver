@@ -1,0 +1,185 @@
+🤖 AI Employee Vault — Bronze Tier (Hackathon 0)
+
+A structured Personal AI Employee system built using an Obsidian Vault + Local Python automation.
+
+This implementation follows the official Hackathon 0 Bronze Tier specification and demonstrates a complete end-to-end AI task workflow.
+
+🎯 Objective
+
+To simulate a Personal AI Employee that:
+
+Monitors incoming tasks
+
+Processes them using defined Agent Skills
+
+Updates task status
+
+Maintains workflow structure
+
+Moves completed work to archive
+
+🧠 Bronze Tier Requirements (PDF Compliant)
+
+This project satisfies ALL Bronze Tier requirements:
+
+✔ Obsidian Vault structure created
+✔ Inbox → Needs_Action → Done workflow implemented
+✔ Filesystem watcher implemented (watcher.py)
+✔ AI processing script implemented (processor.py)
+✔ Agent Skill documented in /skills
+✔ End-to-end task lifecycle verified
+✔ Prompt history logging implemented
+✔ Git version control configured
+✔ Clean project documentation provided
+
+Status: 100% Bronze Tier Complete
+
+🏗️ System Architecture
+User drops task → Inbox
+        ↓
+watcher.py detects new file
+        ↓
+File moved to Needs_Action
+        ↓
+processor.py processes task
+        ↓
+AI summary appended
+        ↓
+Status marked Completed
+        ↓
+File moved to Done
+
+📁 Vault Structure
+AI_Employee_Vault/
+│
+├── Inbox/
+├── Needs_Action/
+├── Done/
+│
+├── skills/
+│   └── process_task.SKILL.md
+│
+├── specs/
+│
+├── Company_Handbook.md
+├── Dashboard.md
+├── Welcome.md
+├── CLAUDE.md
+├── prompt_history.md
+│
+├── watcher.py
+└── processor.py
+
+⚙️ Requirements
+
+Python 3.x
+
+Windows / PowerShell
+
+Obsidian (recommended for vault visualization)
+
+Git (for version control)
+
+🚀 How to Run
+1️⃣ Start the Watcher (Inbox → Needs_Action)
+cd C:\Users\Zohair\Desktop\AI_Employee_Vault
+python watcher.py
+
+
+Now create a markdown task inside:
+
+Inbox/
+
+
+Example:
+
+skill_test.md
+
+2️⃣ Process Tasks (Needs_Action → Done)
+
+Open a second terminal:
+
+cd C:\Users\Zohair\Desktop\AI_Employee_Vault
+python processor.py
+
+
+The task will:
+
+Be rewritten in processed format
+
+Include AI Summary section
+
+Be marked as Completed
+
+Move automatically to /Done
+
+🧠 Agent Skill (Bronze Implementation)
+
+All AI functionality is implemented as a documented Agent Skill:
+
+skills/process_task.SKILL.md
+
+
+Skill Definition Includes:
+
+Task reading logic
+
+Summary generation
+
+Status update
+
+File movement logic
+
+Output confirmation (TASK_COMPLETE)
+
+This aligns with Bronze requirement:
+
+“All AI functionality should be implemented as Agent Skills.”
+
+🧪 Workflow Verification
+
+Tested Successfully:
+
+✔ Inbox detection
+✔ File auto-movement
+✔ Task rewriting
+✔ Status tagging
+✔ Archive movement
+✔ Git commit + push
+
+📊 Implementation Level
+Feature	Status
+Vault Structure	✅ Complete
+Task Monitoring	✅ Complete
+Task Processing	✅ Complete
+Agent Skill Definition	✅ Complete
+GitHub Repository	✅ Live
+README Documentation	✅ Complete
+🔮 Future Enhancements (Silver / Gold Ready)
+
+This architecture is designed to scale toward:
+
+Background daemon service
+
+Multi-Skill architecture
+
+Approval workflows
+
+Cloud deployment
+
+API-based AI integration
+
+Multi-agent routing
+
+Logging & analytics dashboard
+
+👨‍💻 Developer
+
+Mehreen Asghar
+Hackathon 0 — Bronze Tier Submission
+
+🏁 Final Status
+
+🟢 Bronze Tier: Fully Implemented
+🟢 PDF Requirements: 100% Covered
+🟢 End-to-End Workflow: Verified
