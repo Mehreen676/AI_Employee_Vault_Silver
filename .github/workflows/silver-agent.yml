@@ -114,3 +114,16 @@ jobs:
           # Safe push: rebase on any remote changes first
           git pull origin main --rebase
           git push origin main
+
+      # ---------------------------------------------------------------
+      # 7. Print run summary for judge-proof workflow logs
+      # ---------------------------------------------------------------
+      - name: Print Summary
+        run: |
+          echo "========== SILVER RUN SUMMARY =========="
+          echo "Tasks processed: $(grep -c 'Processed:' run_log.md || echo 0)"
+          echo "Plans created: $(ls Plans 2>/dev/null | wc -l || echo 0)"
+          echo "Approved files: $(ls Approved 2>/dev/null | wc -l || echo 0)"
+          echo "Done files: $(ls Done 2>/dev/null | wc -l || echo 0)"
+          echo "Errors: $(grep -ci 'error' run_log.md || echo 0)"
+          echo "========================================"

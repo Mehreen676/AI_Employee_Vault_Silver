@@ -13,6 +13,10 @@ All events logged to:
   Logs/summary_<ts>.md      (end-of-run stats)
 
 Safe: never crashes if OPENAI_API_KEY is missing — deterministic fallback plan used.
+
+Optional strict mode (local / advanced use only):
+  Set OPENAI_REQUIRED=true to raise an error if OPENAI_API_KEY is missing.
+  Default is false — existing fallback behaviour is unchanged.
 """
 
 from __future__ import annotations
@@ -20,6 +24,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -50,6 +55,9 @@ PROMPT_HISTORY = BASE_DIR / "prompt_history.md"
 
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 MAX_CHARS = int(os.getenv("MAX_TASK_CHARS", "6000"))
+
+# Optional strict mode — disabled by default, never enabled in workflow
+OPENAI_REQUIRED = os.getenv("OPENAI_REQUIRED", "false").lower() == "true"
 
 # Keywords that trigger LinkedIn draft creation
 BUSINESS_KEYWORDS = {
@@ -94,6 +102,21 @@ def is_business_task(text: str) -> bool:
 # ---------------------------------------------------------------------------
 # OpenAI helpers
 # ---------------------------------------------------------------------------
+
+def _check_openai_required() -> None:
+    """If OPENAI_REQUIRED=true and key is missing, log and raise RuntimeError."""
+    if not OPENAI_REQUIRED:
+        return
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        msg = (
+            "OPENAI_REQUIRED=true but OPENAI_API_KEY is not set. "
+            "Set the key or set OPENAI_REQUIRED=false to use fallback mode."
+        )
+        _append_log(f"{utc_ts()} - Agent: ERROR | {msg}\n")
+        _log_ev("agent_openai_required_missing", {"reason": msg})
+        raise RuntimeError(msg)
+
 
 def _call_openai(prompt: str) -> tuple[str, str]:
     """Call OpenAI API. Returns (response_text, status)."""
@@ -266,7 +289,14 @@ def main() -> None:
         PROMPT_HISTORY.write_text("# Prompt History\n\n", encoding="utf-8")
 
     _append_log(f"{utc_ts()} - Agent: started\n")
-    _log_ev("agent_started", {"model": MODEL})
+    _log_ev("agent_started", {"model": MODEL, "openai_required": OPENAI_REQUIRED})
+
+    # ---- Strict mode check (optional, disabled by default) ---------------
+    try:
+        _check_openai_required()
+    except RuntimeError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        sys.exit(1)
 
     # Stats counters
     stats = {

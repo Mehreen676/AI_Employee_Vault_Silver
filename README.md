@@ -1,8 +1,46 @@
+![Silver Agent Status](https://img.shields.io/badge/Silver-Agent-Cloud_Automated-brightgreen)
+![HITL](https://img.shields.io/badge/HITL-Enabled-blue)
+![MCP](https://img.shields.io/badge/MCP-Integrated-orange)
+
 # AI Employee Vault — Silver Tier (Hackathon 0)
 
 A fully production-grade **Personal AI Employee** system with multi-channel task ingestion,
 Claude/OpenAI-powered reasoning plans, LinkedIn HITL auto-posting, MCP-style tool abstraction,
 and cloud scheduling via GitHub Actions.
+
+---
+
+## System Architecture
+
+```
+Watchers (Inbox / Manual / WhatsApp / LinkedIn / Gmail)
+        ↓
+Needs_Action
+        ↓
+Agent (Plan Generator)
+        ↓
+Pending_Approval (HITL)
+        ↓
+Approved
+        ↓
+Post + Done
+        ↓
+Logs + Evidence Pack
+```
+
+---
+
+## LinkedIn Posting Mode
+
+By default, LinkedIn posting runs in **SIMULATED MODE**.
+
+Real posting is only enabled when valid credentials are provided:
+- `LINKEDIN_ACCESS_TOKEN`
+- `LINKEDIN_PERSON_URN`
+
+This prevents unintended public posts.
+
+Transparency = audit trust.
 
 ---
 
