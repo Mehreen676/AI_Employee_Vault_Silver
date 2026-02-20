@@ -484,3 +484,17 @@ Action: Moved to Needs_Action
 2026-02-20 17:28:24Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
 2026-02-20 17:28:24Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
 2026-02-20 17:28:24Z - PostApproved: done | {'found': 3, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 3, 'errors': 0}
+2026-02-20 18:01:21Z - WhatsApp_Watcher: empty_file
+2026-02-20 18:01:21Z - LinkedIn_Watcher: empty_file
+2026-02-20 18:01:22Z - gmail_watcher_skipped_cloud | GMAIL_OAUTH_ENABLED=false
+2026-02-20 18:01:22Z - Agent: started
+2026-02-20 18:01:22Z - Agent: no_tasks_found
+2026-02-20 18:01:22Z - Agent: done | {'tasks_processed': 0, 'plans_created': 0, 'linkedin_drafts_created': 0, 'fallback_count': 0, 'openai_ok_count': 0, 'errors': 0}
+2026-02-20 18:01:22Z - PostApproved: started
+2026-02-20 18:01:22Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-20 18:01:22Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-02-20 18:01:22Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-20 18:01:22Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-02-20 18:01:22Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-20 18:01:22Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-02-20 18:01:22Z - PostApproved: done | {'found': 3, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 3, 'errors': 0}
