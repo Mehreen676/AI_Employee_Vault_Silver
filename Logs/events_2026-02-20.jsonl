@@ -67,3 +67,17 @@
 {"ts": "2026-02-20 06:00:13Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
 {"ts": "2026-02-20 06:00:13Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260220_060013.json"}
 {"ts": "2026-02-20 06:00:13Z", "event": "post_approved_done", "found": 3, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 3, "errors": 0}
+{"ts": "2026-02-20 06:10:23Z", "event": "whatsapp_watcher_skip", "reason": "empty_file"}
+{"ts": "2026-02-20 06:10:23Z", "event": "linkedin_watcher_skip", "reason": "empty_file"}
+{"ts": "2026-02-20 06:10:23Z", "event": "gmail_watcher_skipped_cloud", "GMAIL_OAUTH_ENABLED": "false"}
+{"ts": "2026-02-20 06:10:24Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": false}
+{"ts": "2026-02-20 06:10:24Z", "event": "agent_no_tasks"}
+{"ts": "2026-02-20 06:10:24Z", "event": "agent_summary", "tasks_processed": 0, "plans_created": 0, "linkedin_drafts_created": 0, "fallback_count": 0, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-20 06:10:24Z", "event": "post_approved_started"}
+{"ts": "2026-02-20 06:10:24Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-20 06:10:24Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260220_061024.json"}
+{"ts": "2026-02-20 06:10:24Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-20 06:10:24Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260220_061024.json"}
+{"ts": "2026-02-20 06:10:24Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-20 06:10:24Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260220_061024.json"}
+{"ts": "2026-02-20 06:10:24Z", "event": "post_approved_done", "found": 3, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 3, "errors": 0}
