@@ -1,11 +1,14 @@
 # =========================
-# Google OAuth Secrets
+# Secrets & OAuth Tokens
 # =========================
+.env
 credentials.json
 token.json
 client_secret*.json
 *.credentials.json
 *.token.json
+*_token.json
+oauth_*.json
 
 # =========================
 # Python cache
@@ -13,25 +16,43 @@ client_secret*.json
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.Python
 
 # =========================
-# Runtime / Generated Files
-# =========================
-Done/
-Approved/
-Pending_Approval/
-Plans/
-manual_input.txt
-run_log.md
-
-# =========================
-# VS Code
-# =========================
-.vscode/
-
-# =========================
-# OS
+# OS / Editor
 # =========================
 .DS_Store
 Thumbs.db
+.vscode/
 .obsidian/
+.trash/
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+.venv/
+env/
+.env/
+
+# =========================
+# Runtime / Generated Files
+# (tracked only via git add in workflow — not auto-ignored globally)
+# If you want to exclude these locally, uncomment:
+# Done/
+# Approved/
+# Pending_Approval/
+# Plans/
+# Logs/
+# run_log.md
+# prompt_history.md
+# =========================
+
+# Claude local settings
+.claude/settings.local.json
+
+
+# Evidence packs (generated)
+evidence_*.zip
+

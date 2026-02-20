@@ -1,5 +1,9 @@
 name: Silver Agent (Cloud Run)
 
+# ---------------------------------------------------------------
+# Triggers: scheduled every 10 minutes + manual dispatch.
+# NO push trigger to prevent infinite commit loops.
+# ---------------------------------------------------------------
 on:
   workflow_dispatch:
   schedule:
@@ -8,6 +12,7 @@ on:
 permissions:
   contents: write
 
+# Only one run at a time — cancel in-progress if a new one starts.
 concurrency:
   group: silver-agent
   cancel-in-progress: true
@@ -17,36 +22,95 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ---------------------------------------------------------------
+      # 1. Checkout with full history so we can push back
+      # ---------------------------------------------------------------
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
 
+      # ---------------------------------------------------------------
+      # 2. Python setup
+      # ---------------------------------------------------------------
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
+        run: pip install --quiet -r requirements.txt
 
-      - name: Run Silver Agent
+      # ---------------------------------------------------------------
+      # 3. Multi-channel watchers (order matters)
+      # ---------------------------------------------------------------
+      - name: "[Watcher 1] Inbox -> Needs_Action"
+        run: python watcher_inbox.py
+
+      - name: "[Watcher 2] Manual input -> Needs_Action"
+        run: python watcher_manual.py
+
+      - name: "[Watcher 3] WhatsApp (simulated) -> Needs_Action"
+        run: python whatsapp_watcher.py
+
+      - name: "[Watcher 4] LinkedIn (simulated) -> Needs_Action"
+        run: python linkedin_watcher.py
+
+      - name: "[Watcher 5] Gmail -> Inbox (guarded by GMAIL_OAUTH_ENABLED)"
+        env:
+          GMAIL_OAUTH_ENABLED: ${{ secrets.GMAIL_OAUTH_ENABLED || 'false' }}
+        run: python gmail_watcher.py
+
+      # ---------------------------------------------------------------
+      # 4. Agent: generate Plans + Pending_Approval drafts + LinkedIn drafts
+      # ---------------------------------------------------------------
+      - name: "[Agent] Process tasks — generate Plans & Pending_Approval"
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL || 'gpt-4o-mini' }}
+          LINKEDIN_SIMULATED: ${{ secrets.LINKEDIN_SIMULATED || 'true' }}
         run: python agent.py
 
+      # ---------------------------------------------------------------
+      # 5. Post Approved: post LinkedIn items from Approved/ only
+      #    (NEVER auto-approves — humans must run approve.py locally first)
+      # ---------------------------------------------------------------
+      - name: "[Post] LinkedIn: post from Approved/ -> Done/"
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          LINKEDIN_SIMULATED: ${{ secrets.LINKEDIN_SIMULATED || 'true' }}
+        run: python post_approved.py
+
+      # ---------------------------------------------------------------
+      # 6. Commit & Push results (safe: pull --rebase before push)
+      # ---------------------------------------------------------------
       - name: Commit & Push Results
         run: |
-          git config user.name "github-actions[bot]"
+          git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add Done run_log.md prompt_history.md Needs_Action || true
+          # Stage only relevant output dirs (never stage secrets or .env)
+          git add \
+            Needs_Action/ \
+            Pending_Approval/ \
+            Approved/ \
+            Done/ \
+            Plans/ \
+            Logs/ \
+            run_log.md \
+            prompt_history.md \
+            || true
 
+          # Exit cleanly if nothing changed
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
           fi
 
-          git commit -m "Cloud: processed tasks via Silver agent"
-          git push
+          git commit -m "Cloud: Silver agent run $(date -u '+%Y-%m-%d %H:%M UTC')"
+
+          # Safe push: rebase on any remote changes first
+          git pull origin main --rebase
+          git push origin main

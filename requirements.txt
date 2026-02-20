@@ -1,1 +1,10 @@
+# Core AI
 openai
+
+# HTTP (LinkedIn API, other external calls)
+requests
+
+# Google / Gmail API (optional — only needed for gmail_watcher.py locally)
+google-auth
+google-auth-oauthlib
+google-api-python-client

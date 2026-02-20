@@ -1,48 +1,53 @@
-"""
-Gmail Watcher – ingests unread inbox emails into Inbox/ as task files.
+"""Gmail Watcher – ingests unread inbox emails into Inbox/ as task files.
 
-Reads UNREAD INBOX emails via Gmail API, filters to allowed senders,
-creates markdown task files in Inbox/, and logs to run_log.md.
-Skips duplicates if a file for the same messageId exists in Inbox/ or Done/.
+CLOUD GUARD: In cloud (GitHub Actions) this script MUST only run if:
+    GMAIL_OAUTH_ENABLED=true
+If the env var is not "true", the script logs "gmail_watcher_skipped_cloud"
+and exits cleanly without error.
 
-Optional: can mark processed emails as READ (requires gmail.modify scope).
-Run locally only (requires OAuth credentials). Not used in cloud workflow.
+Local usage (requires OAuth credentials.json + token.json):
+    python gmail_watcher.py
 
-Usage:
-    C:\\Users\\Zohair\\AppData\\Local\\Programs\\Python\\Python314\\python.exe gmail_watcher.py
+Features:
+  - Reads UNREAD INBOX emails via Gmail API.
+  - Filters to ALLOWED_DOMAINS only (configurable).
+  - Skips duplicate messages (checks Inbox/ and Done/ for existing message IDs).
+  - Creates Inbox/email_<timestamp>_<messageId>.md for each ingested email.
+  - Logs all events to run_log.md (UTC) and Logs/events_<date>.jsonl.
+  - Never crashes: exits cleanly on missing credentials.
 """
 
 from __future__ import annotations
 
+import json
+import os
 import re
-from pathlib import Path
 from datetime import datetime, timezone
-
-# --------------- Gmail API imports ---------------
-try:
-    from google.auth.transport.requests import Request
-    from google.oauth2.credentials import Credentials
-    from google_auth_oauthlib.flow import InstalledAppFlow
-    from googleapiclient.discovery import build
-except ImportError:
-    print("Gmail API libraries not installed. Run:")
-    print("  python -m pip install google-auth google-auth-oauthlib google-api-python-client")
-    raise SystemExit(1)
-
-# --------------- Config ---------------
-# Safe default (read-only). If you want auto-mark-as-read, change to gmail.modify.
-SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
-# SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]  # <-- enable if you want mark-as-read
-
-MARK_AS_READ = False  # set True only if using gmail.modify scope
-
-ALLOWED_DOMAINS = {"google.com", "github.com", "microsoft.com", "azure.com"}
+from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 INBOX = BASE_DIR / "Inbox"
 DONE = BASE_DIR / "Done"
+LOGS_DIR = BASE_DIR / "Logs"
 RUN_LOG = BASE_DIR / "run_log.md"
 
+# Trusted sender domains — only emails from these are ingested
+ALLOWED_DOMAINS = {
+    "google.com",
+    "github.com",
+    "microsoft.com",
+    "azure.com",
+    "anthropic.com",
+}
+
+# Safe read-only scope (change to gmail.modify + set MARK_AS_READ=True to mark read)
+SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+MARK_AS_READ = False  # requires gmail.modify scope if True
+
+
+# ---------------------------------------------------------------------------
+# Internal helpers
+# ---------------------------------------------------------------------------
 
 def utc_ts() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
@@ -53,13 +58,27 @@ def utc_file_ts() -> str:
 
 
 def append_log(text: str) -> None:
-    RUN_LOG.parent.mkdir(parents=True, exist_ok=True)
-    with open(RUN_LOG, "a", encoding="utf-8") as f:
-        f.write(text)
+    try:
+        RUN_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with open(RUN_LOG, "a", encoding="utf-8") as f:
+            f.write(text)
+    except Exception:
+        pass
+
+
+def log_event(event_type: str, data: dict) -> None:
+    try:
+        LOGS_DIR.mkdir(parents=True, exist_ok=True)
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        events_file = LOGS_DIR / f"events_{today}.jsonl"
+        entry = {"ts": utc_ts(), "event": event_type, **data}
+        with open(events_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+    except Exception:
+        pass
 
 
 def extract_domain(email_addr: str) -> str:
-    """Extract domain from 'Name <user@domain.com>' or 'user@domain.com'."""
     match = re.search(r"@([\w.-]+)", email_addr)
     return match.group(1).lower() if match else ""
 
@@ -77,17 +96,32 @@ def get_header(headers: list[dict], name: str) -> str:
 
 
 def file_exists_for_id(msg_id: str) -> bool:
-    """Check if a file for this messageId already exists in Inbox/ or Done/."""
     suffix = f"_{msg_id}.md"
     for folder in [INBOX, DONE]:
         if folder.is_dir():
-            for f in folder.glob(f"*{suffix}"):
+            if any(f.name.endswith(suffix) for f in folder.glob("*.md")):
                 return True
     return False
 
 
+# ---------------------------------------------------------------------------
+# Gmail auth
+# ---------------------------------------------------------------------------
+
 def auth_gmail():
-    """Authorize and return Gmail service."""
+    """Authorize and return Gmail service object."""
+    try:
+        from google.auth.transport.requests import Request
+        from google.oauth2.credentials import Credentials
+        from google_auth_oauthlib.flow import InstalledAppFlow
+        from googleapiclient.discovery import build
+    except ImportError:
+        print(
+            "Gmail API libraries not installed. Run:\n"
+            "  pip install google-auth google-auth-oauthlib google-api-python-client"
+        )
+        raise SystemExit(1)
+
     creds = None
     token_path = BASE_DIR / "token.json"
     creds_path = BASE_DIR / "credentials.json"
@@ -101,7 +135,7 @@ def auth_gmail():
         else:
             if not creds_path.exists():
                 print("ERROR: credentials.json not found.")
-                print("Download OAuth JSON and rename to credentials.json in repo root.")
+                print("Download OAuth JSON from Google Cloud Console and rename to credentials.json")
                 raise SystemExit(1)
             flow = InstalledAppFlow.from_client_secrets_file(str(creds_path), SCOPES)
             creds = flow.run_local_server(port=0)
@@ -113,7 +147,6 @@ def auth_gmail():
 
 
 def mark_read(service, msg_id: str) -> None:
-    """Remove UNREAD label (requires gmail.modify)."""
     if not MARK_AS_READ:
         return
     try:
@@ -122,51 +155,96 @@ def mark_read(service, msg_id: str) -> None:
             id=msg_id,
             body={"removeLabelIds": ["UNREAD"]},
         ).execute()
-    except Exception as e:
-        append_log(f"{utc_ts()} - Gmail: mark_read_failed | id={msg_id} | err={e}\n")
+    except Exception as exc:
+        append_log(f"{utc_ts()} - Gmail: mark_read_failed | id={msg_id} | err={exc}\n")
 
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
 def main() -> None:
+    # ---- CLOUD GUARD ----------------------------------------------------
+    gmail_enabled = os.getenv("GMAIL_OAUTH_ENABLED", "false").strip().lower()
+    if gmail_enabled != "true":
+        print("Gmail watcher skipped: GMAIL_OAUTH_ENABLED is not 'true'.")
+        append_log(
+            f"{utc_ts()} - gmail_watcher_skipped_cloud | GMAIL_OAUTH_ENABLED={gmail_enabled}\n"
+        )
+        log_event("gmail_watcher_skipped_cloud", {"GMAIL_OAUTH_ENABLED": gmail_enabled})
+        return
+
     print("=== Gmail Watcher Running ===")
 
     INBOX.mkdir(parents=True, exist_ok=True)
     DONE.mkdir(parents=True, exist_ok=True)
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
-    service = auth_gmail()
+    append_log(f"{utc_ts()} - Gmail: starting\n")
+    log_event("gmail_watcher_started", {})
 
-    results = service.users().messages().list(
-        userId="me",
-        labelIds=["INBOX"],
-        q="is:unread",
-        maxResults=10,
-    ).execute()
+    try:
+        service = auth_gmail()
+    except SystemExit:
+        append_log(f"{utc_ts()} - Gmail: auth_failed | credentials missing\n")
+        log_event("gmail_auth_failed", {"reason": "credentials_missing"})
+        return
+    except Exception as exc:
+        append_log(f"{utc_ts()} - Gmail: auth_error | {exc}\n")
+        log_event("gmail_auth_error", {"reason": str(exc)})
+        return
+
+    try:
+        results = service.users().messages().list(
+            userId="me",
+            labelIds=["INBOX"],
+            q="is:unread",
+            maxResults=10,
+        ).execute()
+    except Exception as exc:
+        append_log(f"{utc_ts()} - Gmail: list_error | {exc}\n")
+        log_event("gmail_list_error", {"reason": str(exc)})
+        return
 
     messages = results.get("messages", [])
 
     if not messages:
         print("No unread inbox messages found.")
         append_log(f"{utc_ts()} - Gmail: no_unread\n")
+        log_event("gmail_no_unread", {})
         return
 
     ingested = 0
     for msg in messages:
         msg_id = msg["id"]
-        detail = service.users().messages().get(userId="me", id=msg_id, format="full").execute()
-        headers = detail.get("payload", {}).get("headers", [])
+        try:
+            detail = service.users().messages().get(
+                userId="me", id=msg_id, format="full"
+            ).execute()
+        except Exception as exc:
+            append_log(f"{utc_ts()} - Gmail: fetch_error | id={msg_id} | {exc}\n")
+            continue
 
+        headers = detail.get("payload", {}).get("headers", [])
         sender = get_header(headers, "From")
         subject = get_header(headers, "Subject")
         date = get_header(headers, "Date")
         snippet = detail.get("snippet", "")
 
-        # Filter by allowed domains
+        # Domain filter
         if not domain_allowed(sender):
-            append_log(f"{utc_ts()} - Gmail: skipped_domain | id={msg_id} | from={sender}\n")
+            append_log(
+                f"{utc_ts()} - Gmail: skipped_domain | id={msg_id} | from={sender}\n"
+            )
+            log_event("gmail_skipped_domain", {"id": msg_id, "from": sender})
             continue
 
         # Duplicate check
         if file_exists_for_id(msg_id):
-            append_log(f"{utc_ts()} - Gmail: duplicate_skipped | id={msg_id} | subject={subject}\n")
+            append_log(
+                f"{utc_ts()} - Gmail: duplicate_skipped | id={msg_id} | subject={subject}\n"
+            )
+            log_event("gmail_duplicate_skipped", {"id": msg_id, "subject": subject})
             continue
 
         filename = f"email_{utc_file_ts()}_{msg_id}.md"
@@ -175,20 +253,32 @@ def main() -> None:
             f"From: {sender}\n"
             f"Subject: {subject}\n"
             f"Date: {date}\n\n"
-            "## Snippet\n"
+            "## Snippet\n\n"
             f"{snippet}\n\n"
             "Source: Gmail\n"
+            f"Allowed Domain: {extract_domain(sender)}\n"
             "Status: New\n"
         )
 
-        (INBOX / filename).write_text(content, encoding="utf-8")
+        try:
+            (INBOX / filename).write_text(content, encoding="utf-8")
+        except Exception as exc:
+            append_log(f"{utc_ts()} - Gmail: write_error | {filename} | {exc}\n")
+            continue
 
-        append_log(f"{utc_ts()} - Gmail ingested: {filename} | from={sender} | subject={subject}\n")
+        append_log(
+            f"{utc_ts()} - Gmail: ingested | {filename} | from={sender} | subject={subject}\n"
+        )
+        log_event(
+            "gmail_ingested",
+            {"file": filename, "from": sender, "subject": subject},
+        )
         ingested += 1
 
-        # Optional: mark email as read so it won't reappear
         mark_read(service, msg_id)
 
+    append_log(f"{utc_ts()} - Gmail: done | ingested={ingested}\n")
+    log_event("gmail_watcher_done", {"ingested": ingested})
     print(f"=== Gmail Watcher Done ({ingested} ingested) ===")
 
 

@@ -1,0 +1,41 @@
+{"ts": "2026-02-20 04:29:06Z", "event": "whatsapp_task_ingested", "file": "wa_20260220_042906_1.md"}
+{"ts": "2026-02-20 04:29:06Z", "event": "whatsapp_task_ingested", "file": "wa_20260220_042906_2.md"}
+{"ts": "2026-02-20 04:29:06Z", "event": "whatsapp_watcher_done", "ingested": 2}
+{"ts": "2026-02-20 04:29:06Z", "event": "linkedin_task_ingested", "file": "li_20260220_042906_1.md"}
+{"ts": "2026-02-20 04:29:06Z", "event": "linkedin_task_ingested", "file": "li_20260220_042906_2.md"}
+{"ts": "2026-02-20 04:29:06Z", "event": "linkedin_watcher_done", "ingested": 2}
+{"ts": "2026-02-20 04:29:13Z", "event": "gmail_watcher_skipped_cloud", "GMAIL_OAUTH_ENABLED": "false"}
+{"ts": "2026-02-20 04:29:16Z", "event": "agent_started", "model": "gpt-4o-mini"}
+{"ts": "2026-02-20 04:29:16Z", "event": "plan_created", "file": "demo_Plan.md", "status": "plan_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "task_processed", "file": "demo.md", "status": "fallback", "hash": "2ae36e5a453f"}
+{"ts": "2026-02-20 04:29:16Z", "event": "plan_created", "file": "li_20260220_042906_1_Plan.md", "status": "plan_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "linkedin_draft_created", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "source": "li_20260220_042906_1.md", "status": "linkedin_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "task_processed", "file": "li_20260220_042906_1.md", "status": "fallback", "hash": "fae28a47a687"}
+{"ts": "2026-02-20 04:29:16Z", "event": "plan_created", "file": "li_20260220_042906_2_Plan.md", "status": "plan_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "linkedin_draft_created", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "source": "li_20260220_042906_2.md", "status": "linkedin_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "task_processed", "file": "li_20260220_042906_2.md", "status": "fallback", "hash": "73017b347e6a"}
+{"ts": "2026-02-20 04:29:16Z", "event": "plan_created", "file": "test_marketing_Plan.md", "status": "plan_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "linkedin_draft_created", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "source": "test_marketing.md", "status": "linkedin_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "task_processed", "file": "test_marketing.md", "status": "fallback", "hash": "d6b334630fa8"}
+{"ts": "2026-02-20 04:29:16Z", "event": "plan_created", "file": "wa_20260220_042906_1_Plan.md", "status": "plan_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "task_processed", "file": "wa_20260220_042906_1.md", "status": "fallback", "hash": "4571a457c981"}
+{"ts": "2026-02-20 04:29:16Z", "event": "plan_created", "file": "wa_20260220_042906_2_Plan.md", "status": "plan_fallback"}
+{"ts": "2026-02-20 04:29:16Z", "event": "task_processed", "file": "wa_20260220_042906_2.md", "status": "fallback", "hash": "01e85cdc4052"}
+{"ts": "2026-02-20 04:29:16Z", "event": "agent_summary", "tasks_processed": 6, "plans_created": 6, "linkedin_drafts_created": 3, "fallback_count": 12, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "demo.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "li_20260220_042906_1.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "li_20260220_042906_2.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "test_marketing.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "wa_20260220_042906_1.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:29:34Z", "event": "file_approved", "file": "wa_20260220_042906_2.md", "dest": "Approved/"}
+{"ts": "2026-02-20 04:30:32Z", "event": "post_approved_started"}
+{"ts": "2026-02-20 04:30:32Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-20 04:30:32Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "reason": "simulated_mode", "evidence": "C:\\Users\\Zohair\\Desktop\\HACKTHONE 0 MEHREEN\\AI_Employee_Vault_Silver\\Logs\\linkedin_simulated_20260220_043032.json"}
+{"ts": "2026-02-20 04:30:32Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-20 04:30:32Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "reason": "simulated_mode", "evidence": "C:\\Users\\Zohair\\Desktop\\HACKTHONE 0 MEHREEN\\AI_Employee_Vault_Silver\\Logs\\linkedin_simulated_20260220_043032.json"}
+{"ts": "2026-02-20 04:30:32Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-20 04:30:32Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "C:\\Users\\Zohair\\Desktop\\HACKTHONE 0 MEHREEN\\AI_Employee_Vault_Silver\\Logs\\linkedin_simulated_20260220_043032.json"}
+{"ts": "2026-02-20 04:30:32Z", "event": "post_approved_done", "found": 3, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 3, "errors": 0}

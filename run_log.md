@@ -54,9 +54,7 @@ Action: Moved to Needs_Action
 2026-02-17 09:32:57Z - No tasks found.
 2026-02-17 10:27:57Z - No tasks found.
 2026-02-17 11:11:39Z - No tasks found.
-<<<<<<< HEAD
 2026-02-17 11:54:55Z - No tasks found.
-=======
 
 2026-02-17 10:45:33Z - Gmail ingested: email_20260217_104533_19c6a93d1722f292.md | from=Google Cloud <googlecloud@google.com> | subject=Welcome to your Google Cloud Free Trial
 2026-02-17 10:45:33Z - Gmail: skipped_domain | id=19c58d149bd241c9 | from=Neon Changelog <changelog@neon.tech>
@@ -86,7 +84,7 @@ Action: Moved to Needs_Action
 2026-02-17 11:02:29Z - No tasks found.
 2026-02-17 11:02:56Z - Processed: test4.md | openai_ok
 2026-02-17 11:23:24Z - Processed: mcp_test.md | openai_ok
->>>>>>> cf4b94b (Silver: MCP integration + Gmail watcher + logs update)
+
 2026-02-17 12:33:25Z - No tasks found.
 2026-02-17 13:49:26Z - No tasks found.
 2026-02-17 14:35:46Z - No tasks found.
@@ -162,3 +160,48 @@ Action: Moved to Needs_Action
 2026-02-19 23:58:11Z - No tasks found.
 2026-02-20 01:48:03Z - No tasks found.
 2026-02-20 04:01:52Z - No tasks found.
+
+2026-02-17 13:01:48Z - Watcher_Inbox: moved demo.md -> Needs_Action/
+2026-02-20 04:29:05Z - Watcher_Inbox: moved test_marketing.md -> Needs_Action/
+2026-02-20 04:29:06Z - WhatsApp_Watcher: ingested -> wa_20260220_042906_1.md
+2026-02-20 04:29:06Z - WhatsApp_Watcher: ingested -> wa_20260220_042906_2.md
+2026-02-20 04:29:06Z - WhatsApp_Watcher: done | ingested=2
+2026-02-20 04:29:06Z - LinkedIn_Watcher: ingested -> li_20260220_042906_1.md
+2026-02-20 04:29:06Z - LinkedIn_Watcher: ingested -> li_20260220_042906_2.md
+2026-02-20 04:29:06Z - LinkedIn_Watcher: done | ingested=2
+2026-02-20 04:29:13Z - gmail_watcher_skipped_cloud | GMAIL_OAUTH_ENABLED=false
+2026-02-20 04:29:16Z - Agent: started
+2026-02-20 04:29:16Z - Agent: plan_created | demo_Plan.md | plan_fallback
+2026-02-20 04:29:16Z - Agent: processed | demo.md | fallback
+2026-02-20 04:29:16Z - Agent: plan_created | li_20260220_042906_1_Plan.md | plan_fallback
+2026-02-20 04:29:16Z - Agent: linkedin_draft_created | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | linkedin_fallback
+2026-02-20 04:29:16Z - Agent: processed | li_20260220_042906_1.md | fallback
+2026-02-20 04:29:16Z - Agent: plan_created | li_20260220_042906_2_Plan.md | plan_fallback
+2026-02-20 04:29:16Z - Agent: linkedin_draft_created | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | linkedin_fallback
+2026-02-20 04:29:16Z - Agent: processed | li_20260220_042906_2.md | fallback
+2026-02-20 04:29:16Z - Agent: plan_created | test_marketing_Plan.md | plan_fallback
+2026-02-20 04:29:16Z - Agent: linkedin_draft_created | linkedin_draft_test_marketing_d6b334630fa8.md | linkedin_fallback
+2026-02-20 04:29:16Z - Agent: processed | test_marketing.md | fallback
+2026-02-20 04:29:16Z - Agent: plan_created | wa_20260220_042906_1_Plan.md | plan_fallback
+2026-02-20 04:29:16Z - Agent: processed | wa_20260220_042906_1.md | fallback
+2026-02-20 04:29:16Z - Agent: plan_created | wa_20260220_042906_2_Plan.md | plan_fallback
+2026-02-20 04:29:16Z - Agent: processed | wa_20260220_042906_2.md | fallback
+2026-02-20 04:29:16Z - Agent: done | {'tasks_processed': 6, 'plans_created': 6, 'linkedin_drafts_created': 3, 'fallback_count': 12, 'openai_ok_count': 0, 'errors': 0}
+2026-02-20 04:29:34Z - Approved: demo.md -> Approved/
+2026-02-20 04:29:34Z - Approved: li_20260220_042906_1.md -> Approved/
+2026-02-20 04:29:34Z - Approved: li_20260220_042906_2.md -> Approved/
+2026-02-20 04:29:34Z - Approved: linkedin_draft_li_20260220_042906_1_fae28a47a687.md -> Approved/
+2026-02-20 04:29:34Z - Approved: linkedin_draft_li_20260220_042906_2_73017b347e6a.md -> Approved/
+2026-02-20 04:29:34Z - Approved: linkedin_draft_test_marketing_d6b334630fa8.md -> Approved/
+2026-02-20 04:29:34Z - Approved: test_marketing.md -> Approved/
+2026-02-20 04:29:34Z - Approved: wa_20260220_042906_1.md -> Approved/
+2026-02-20 04:29:34Z - Approved: wa_20260220_042906_2.md -> Approved/
+2026-02-20 04:30:32Z - PostApproved: started
+2026-02-20 04:30:32Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-20 04:30:32Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-02-20 04:30:32Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-20 04:30:32Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-02-20 04:30:32Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-20 04:30:32Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-02-20 04:30:32Z - PostApproved: done | {'found': 3, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 3, 'errors': 0}
+2026-02-20 04:31:45Z - EvidencePack: created | evidence_20260220_043144.zip | files=56 | size=27.4KB

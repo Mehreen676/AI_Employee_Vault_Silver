@@ -183,3 +183,99 @@ TASK:
 Test MCP integration.
 ---
 
+---
+[2026-02-20 04:29:16Z] PLAN FILE: demo_Plan.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] FILE: demo.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] PLAN FILE: li_20260220_042906_1_Plan.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] FILE: li_20260220_042906_1.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] PLAN FILE: li_20260220_042906_2_Plan.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] FILE: li_20260220_042906_2.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] PLAN FILE: test_marketing_Plan.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] FILE: test_marketing.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] PLAN FILE: wa_20260220_042906_1_Plan.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] FILE: wa_20260220_042906_1.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] PLAN FILE: wa_20260220_042906_2_Plan.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT:
+fallback
+---
+
+---
+[2026-02-20 04:29:16Z] FILE: wa_20260220_042906_2.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT:
+fallback
+---
+
