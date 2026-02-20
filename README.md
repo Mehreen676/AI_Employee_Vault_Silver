@@ -1,4 +1,4 @@
-![Silver Agent](https://img.shields.io/badge/Silver-Agent-Cloud_Automated-brightgreen)
+![Silver Agent](https://img.shields.io/badge?label=Silver%20Agent&message=Cloud%20Automated&color=brightgreen)
 ![HITL](https://img.shields.io/badge/HITL-Enabled-blue)
 ![MCP](https://img.shields.io/badge/MCP-Integrated-orange)
 
