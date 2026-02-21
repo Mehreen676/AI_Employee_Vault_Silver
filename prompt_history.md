@@ -333,3 +333,30 @@ PROMPT_SNIPPET:
 fallback (no API key)
 ---
 
+---
+[2026-02-21 06:18:47Z] PLAN FILE: task_openai_test_Plan.md
+TASK FILE: task_openai_test.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 06:18:49Z] SUMMARY: task_openai_test.md
+TASK FILE: task_openai_test.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 06:18:51Z] LINKEDIN DRAFT: linkedin_draft_task_openai_test_7143767d81c6.md
+TASK FILE: task_openai_test.md
+MODEL: gpt-4o-mini
+STATUS: linkedin_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
