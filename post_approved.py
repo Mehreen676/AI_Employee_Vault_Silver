@@ -3,6 +3,13 @@
 Scans Approved/ for linkedin_draft_*.md files, posts them via
 mcp_linkedin_ops.create_post(), then moves processed files to Done/.
 
+HITL Hard Block:
+  - Before processing, scans Pending_Approval/ for any linkedin_draft_* files.
+  - Each unapproved draft is logged as "blocked_without_approval" — clear evidence
+    that the system enforces human approval before any LinkedIn action.
+  - ONLY files physically inside Approved/ are ever posted.
+  - Files in Pending_Approval/ are NEVER touched or posted by this script.
+
 Idempotency:
   - Tracks posted task hashes in Logs/posted_ids.json.
   - Skips files whose hash was already posted to avoid double-posting.
@@ -34,6 +41,7 @@ from mcp_file_ops import list_files, move_file, append_file, log_event
 from mcp_linkedin_ops import create_post
 
 BASE_DIR = Path(__file__).resolve().parent
+PENDING_APPROVAL = BASE_DIR / "Pending_Approval"
 APPROVED = BASE_DIR / "Approved"
 DONE = BASE_DIR / "Done"
 LOGS_DIR = BASE_DIR / "Logs"
@@ -105,6 +113,41 @@ def _extract_post_text(content: str) -> str:
 
 
 # ---------------------------------------------------------------------------
+# HITL Hard Block — scan Pending_Approval and log unapproved drafts
+# ---------------------------------------------------------------------------
+
+def _check_and_log_pending_blocks() -> int:
+    """Scan Pending_Approval/ for unapproved linkedin_draft_* files.
+
+    Each one is logged as 'blocked_without_approval' — hard evidence of HITL
+    enforcement. Returns the count of blocked files found.
+    """
+    PENDING_APPROVAL.mkdir(parents=True, exist_ok=True)
+    pending_li = list_files(PENDING_APPROVAL, "linkedin_draft_*.md")
+    if not pending_li:
+        return 0
+
+    for fname in pending_li:
+        msg = (
+            f"HITL_BLOCK: '{fname}' is in Pending_Approval/ and has NOT been approved. "
+            "Move to Approved/ via `python approve.py` before this script can post it."
+        )
+        print(f"  [BLOCKED] {fname} — requires human approval first.")
+        _append_log(f"{utc_ts()} - PostApproved: blocked_without_approval | {fname}\n")
+        _log_ev(
+            "blocked_without_approval",
+            {"file": fname, "location": "Pending_Approval/", "action_required": "approve.py"},
+        )
+
+    print(
+        f"\n  {len(pending_li)} draft(s) are waiting for approval in Pending_Approval/.\n"
+        "  Run: python approve.py --all   (or approve individually)\n"
+        "  Then re-run post_approved.py to post them.\n"
+    )
+    return len(pending_li)
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -118,12 +161,21 @@ def main() -> None:
     _append_log(f"{utc_ts()} - PostApproved: started\n")
     _log_ev("post_approved_started", {})
 
-    # Find all linkedin_draft_* files in Approved/
+    # ---- HITL Hard Block check -----------------------------------------
+    print("\n[HITL CHECK] Scanning Pending_Approval/ for unapproved drafts...")
+    blocked_count = _check_and_log_pending_blocks()
+    if blocked_count == 0:
+        print("  No unapproved drafts found in Pending_Approval/. Good.")
+        _append_log(f"{utc_ts()} - PostApproved: hitl_check_clear | no_pending_drafts\n")
+    _log_ev("hitl_check_done", {"blocked_count": blocked_count})
+
+    # ---- Only process files inside Approved/ ----------------------------
+    print("\n[APPROVED] Scanning Approved/ for approved LinkedIn drafts...")
     li_files = list_files(APPROVED, "linkedin_draft_*.md")
 
     if not li_files:
         print("No approved LinkedIn drafts found in Approved/.")
-        _append_log(f"{utc_ts()} - PostApproved: no_linkedin_files\n")
+        _append_log(f"{utc_ts()} - PostApproved: no_approved_linkedin_files\n")
         _log_ev("post_approved_no_files", {})
         print("=== Post Approved Done ===")
         return
@@ -167,7 +219,7 @@ def main() -> None:
             stats["errors"] += 1
             continue
 
-        # ---- Attempt to post -------------------------------------------
+        # ---- Attempt to post (Approved/ only — HITL enforced) ----------
         result = create_post(post_text)
 
         if result.get("ok"):
@@ -222,11 +274,12 @@ def main() -> None:
     _log_ev("post_approved_done", stats)
 
     print(f"\n=== Post Approved Done ===")
-    print(f"  Found    : {stats['found']}")
-    print(f"  Posted   : {stats['posted']}")
-    print(f"  Duplicate: {stats['skipped_duplicate']}")
+    print(f"  HITL blocked  : {blocked_count}")
+    print(f"  Found         : {stats['found']}")
+    print(f"  Posted        : {stats['posted']}")
+    print(f"  Duplicate     : {stats['skipped_duplicate']}")
     print(f"  Not configured: {stats['skipped_not_configured']}")
-    print(f"  Errors   : {stats['errors']}")
+    print(f"  Errors        : {stats['errors']}")
 
 
 if __name__ == "__main__":

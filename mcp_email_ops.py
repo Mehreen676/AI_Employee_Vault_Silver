@@ -1,10 +1,18 @@
-"""MCP Email Operations – send email via SMTP or simulated mode (BONUS).
+"""MCP Email Operations – send email via SMTP or simulated mode.
 
 Behaviour:
-  - If SMTP_HOST + SMTP_USER + SMTP_PASS env vars are set: sends real email.
+  - If SMTP_HOST + SMTP_USER + SMTP_PASS env vars are set: sends real email via STARTTLS.
+  - SMTP_FROM is optional; falls back to SMTP_USER if not set.
   - Otherwise: SIMULATED MODE — writes evidence JSON to Logs/email_simulated_<ts>.json.
   - NEVER crashes regardless of credential state.
   - All events logged to run_log.md and Logs/events_<date>.jsonl.
+
+Required env vars for real sending:
+  SMTP_HOST   SMTP server hostname
+  SMTP_PORT   Port (default 587)
+  SMTP_USER   SMTP login username
+  SMTP_PASS   SMTP login password (never logged)
+  SMTP_FROM   Sender address (optional; defaults to SMTP_USER)
 """
 
 from __future__ import annotations
@@ -60,23 +68,30 @@ def _log_event(event_type: str, data: dict) -> None:
 # ---------------------------------------------------------------------------
 
 def send_email(to: str, subject: str, body: str) -> dict:
-    """Send an email.
+    """Send an email via SMTP, or write simulated evidence if creds missing.
+
+    Args:
+        to:      Recipient email address.
+        subject: Email subject line.
+        body:    Plain-text email body.
 
     Returns:
-        {"ok": True}                                                  on success
-        {"ok": False, "reason": "...", "evidence_path": "..."}        on simulated / error
+        {"ok": True}                                         on real success
+        {"ok": False, "reason": "...", "evidence_path": "..."} on simulated/error
     """
     smtp_host = os.getenv("SMTP_HOST", "").strip()
     smtp_port_raw = os.getenv("SMTP_PORT", "587").strip()
     smtp_user = os.getenv("SMTP_USER", "").strip()
     smtp_pass = os.getenv("SMTP_PASS", "").strip()
+    # SMTP_FROM is optional — falls back to smtp_user if not provided
+    smtp_from = os.getenv("SMTP_FROM", "").strip() or smtp_user
 
     try:
         smtp_port = int(smtp_port_raw)
     except ValueError:
         smtp_port = 587
 
-    # ---- Simulated mode if credentials missing -------------------------
+    # ---- Simulated mode if credentials missing --------------------------
     if not smtp_host or not smtp_user or not smtp_pass:
         LOGS_DIR.mkdir(parents=True, exist_ok=True)
         evidence_path = LOGS_DIR / f"email_simulated_{_ts_slug()}.json"
@@ -87,31 +102,46 @@ def send_email(to: str, subject: str, body: str) -> dict:
             "subject": subject,
             "body": body,
             "reason": "not_configured",
+            "missing": [
+                k for k, v in {
+                    "SMTP_HOST": smtp_host,
+                    "SMTP_USER": smtp_user,
+                    "SMTP_PASS": smtp_pass,
+                }.items() if not v
+            ],
         }
         try:
             evidence_path.write_text(json.dumps(evidence, indent=2), encoding="utf-8")
         except Exception:
             pass
-        _append_log(f"{_utc_ts()} - email_send_attempt | simulated | to={to}\n")
-        _log_event("email_send_simulated", {"to": to, "subject": subject})
-        return {"ok": False, "reason": "not_configured", "evidence_path": str(evidence_path)}
+        _append_log(
+            f"{_utc_ts()} - email_send_attempt | simulated | not_configured | to={to}\n"
+        )
+        _log_event("email_send_simulated", {
+            "to": to, "subject": subject, "evidence": str(evidence_path)
+        })
+        return {
+            "ok": False,
+            "reason": "not_configured",
+            "evidence_path": str(evidence_path),
+        }
 
-    # ---- Real SMTP send ------------------------------------------------
-    _append_log(f"{_utc_ts()} - email_send_attempt | live | to={to}\n")
-    _log_event("email_send_attempt", {"to": to, "subject": subject})
+    # ---- Real SMTP send -------------------------------------------------
+    _append_log(f"{_utc_ts()} - email_send_attempt | live | to={to} | from={smtp_from}\n")
+    _log_event("email_send_attempt", {"to": to, "subject": subject, "smtp_host": smtp_host})
 
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
-        msg["From"] = smtp_user
+        msg["From"] = smtp_from
         msg["To"] = to
         msg.attach(MIMEText(body, "plain"))
 
         with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as server:
             server.ehlo()
             server.starttls()
-            server.login(smtp_user, smtp_pass)
-            server.sendmail(smtp_user, [to], msg.as_string())
+            server.login(smtp_user, smtp_pass)  # password NOT logged
+            server.sendmail(smtp_from, [to], msg.as_string())
 
         _append_log(f"{_utc_ts()} - email_send_success | to={to}\n")
         _log_event("email_send_success", {"to": to, "subject": subject})

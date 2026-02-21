@@ -708,3 +708,31 @@ Action: Moved to Needs_Action
 2026-02-21 04:12:35Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
 2026-02-21 04:12:35Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
 2026-02-21 04:12:35Z - PostApproved: done | {'found': 3, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 3, 'errors': 0}
+2026-02-21 04:15:28Z - Watcher_Inbox: moved test_judge.md -> Needs_Action/
+2026-02-21 04:15:28Z - Agent: started | model=gpt-4o-mini | openai_required=False
+2026-02-21 04:15:28Z - Agent: plan_created | test_judge_Plan.md | plan_fallback
+2026-02-21 04:15:28Z - Agent: linkedin_draft_created | linkedin_draft_test_judge_59986181bbdd.md | linkedin_fallback
+2026-02-21 04:15:28Z - Agent: processed | test_judge.md | fallback
+2026-02-21 04:15:28Z - Agent: done | {'tasks_processed': 1, 'plans_created': 1, 'linkedin_drafts_created': 1, 'fallback_count': 2, 'openai_ok_count': 0, 'errors': 0}
+2026-02-21 04:15:28Z - PostApproved: started
+2026-02-21 04:15:28Z - PostApproved: blocked_without_approval | linkedin_draft_test_judge_59986181bbdd.md
+2026-02-21 04:15:28Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 04:15:28Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-02-21 04:15:28Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 04:15:28Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-02-21 04:15:28Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 04:15:28Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-02-21 04:15:28Z - PostApproved: done | {'found': 3, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 3, 'errors': 0}
+2026-02-21 04:15:28Z - Approved: linkedin_draft_test_judge_59986181bbdd.md -> Approved/
+2026-02-21 04:15:28Z - Approved: test_judge.md -> Approved/
+2026-02-21 04:15:28Z - PostApproved: started
+2026-02-21 04:15:28Z - PostApproved: hitl_check_clear | no_pending_drafts
+2026-02-21 04:15:28Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 04:15:28Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-02-21 04:15:28Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 04:15:28Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-02-21 04:15:28Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 04:15:28Z - PostApproved: simulated_mode | linkedin_draft_test_judge_59986181bbdd.md | kept in Approved/
+2026-02-21 04:15:28Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 04:15:28Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-02-21 04:15:28Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}

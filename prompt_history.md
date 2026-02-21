@@ -279,3 +279,30 @@ PROMPT:
 fallback
 ---
 
+---
+[2026-02-21 04:15:28Z] PLAN FILE: test_judge_Plan.md
+TASK FILE: test_judge.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 04:15:28Z] SUMMARY: test_judge.md
+TASK FILE: test_judge.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 04:15:28Z] LINKEDIN DRAFT: linkedin_draft_test_judge_59986181bbdd.md
+TASK FILE: test_judge.md
+MODEL: gpt-4o-mini
+STATUS: linkedin_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+

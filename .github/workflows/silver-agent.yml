@@ -64,6 +64,8 @@ jobs:
 
       # ---------------------------------------------------------------
       # 4. Agent: generate Plans + Pending_Approval drafts + LinkedIn drafts
+      #    Skills: planning_skill / summarize_skill / linkedin_skill
+      #    OPENAI_REQUIRED is NOT set here — fallback is always the safe default.
       # ---------------------------------------------------------------
       - name: "[Agent] Process tasks — generate Plans & Pending_Approval"
         env:
@@ -74,9 +76,10 @@ jobs:
 
       # ---------------------------------------------------------------
       # 5. Post Approved: post LinkedIn items from Approved/ only
-      #    (NEVER auto-approves — humans must run approve.py locally first)
+      #    HITL hard block: logs "blocked_without_approval" for Pending_Approval drafts.
+      #    NEVER auto-approves — humans must run approve.py locally first.
       # ---------------------------------------------------------------
-      - name: "[Post] LinkedIn: post from Approved/ -> Done/"
+      - name: "[Post] LinkedIn: HITL check + post from Approved/ -> Done/"
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
@@ -127,3 +130,23 @@ jobs:
           echo "Done files: $(ls Done 2>/dev/null | wc -l || echo 0)"
           echo "Errors: $(grep -ci 'error' run_log.md || echo 0)"
           echo "========================================"
+
+      # ---------------------------------------------------------------
+      # 8. Upload evidence artifacts (always runs, even on failure)
+      #    Judges can download these directly from the Actions run page.
+      # ---------------------------------------------------------------
+      - name: Upload Evidence Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: silver-agent-evidence-${{ github.run_number }}
+          path: |
+            run_log.md
+            prompt_history.md
+            Plans/
+            Pending_Approval/
+            Approved/
+            Done/
+            Logs/
+          if-no-files-found: ignore
+          retention-days: 30
