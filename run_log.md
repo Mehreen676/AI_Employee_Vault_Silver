@@ -770,3 +770,22 @@ Action: Moved to Needs_Action
 2026-02-21 05:56:23Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
 2026-02-21 05:56:23Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
 2026-02-21 05:56:23Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}
+2026-02-21 06:03:36Z - WhatsApp_Watcher: empty_file
+2026-02-21 06:03:36Z - LinkedIn_Watcher: empty_file
+2026-02-21 06:03:36Z - gmail_watcher_skipped_cloud | GMAIL_OAUTH_ENABLED=false
+2026-02-21 06:03:36Z - Agent: started | model=gpt-4o-mini | openai_required=False
+2026-02-21 06:03:40Z - Agent: plan_created | task_real_test_Plan.md | plan_fallback
+2026-02-21 06:03:45Z - Agent: linkedin_draft_created | linkedin_draft_task_real_test_7143767d81c6.md | linkedin_fallback
+2026-02-21 06:03:45Z - Agent: processed | task_real_test.md | fallback
+2026-02-21 06:03:45Z - Agent: done | {'tasks_processed': 1, 'plans_created': 1, 'linkedin_drafts_created': 1, 'fallback_count': 2, 'openai_ok_count': 0, 'errors': 0}
+2026-02-21 06:03:45Z - PostApproved: started
+2026-02-21 06:03:45Z - PostApproved: blocked_without_approval | linkedin_draft_task_real_test_7143767d81c6.md
+2026-02-21 06:03:45Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:03:45Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-02-21 06:03:45Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:03:45Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-02-21 06:03:45Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:03:45Z - PostApproved: simulated_mode | linkedin_draft_test_judge_59986181bbdd.md | kept in Approved/
+2026-02-21 06:03:45Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:03:45Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-02-21 06:03:45Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}
