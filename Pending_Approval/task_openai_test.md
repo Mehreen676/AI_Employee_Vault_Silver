@@ -1,16 +1,22 @@
 # Processed Task: task_openai_test
 
-**Processed:** 2026-02-21 06:18:49Z
+**Processed:** 2026-02-21 06:31:13Z
 **Model:** gpt-4o-mini
 **Status:** fallback
-**Task Hash:** 7143767d81c6
+**Task Hash:** bf0c6d5236fa
 **Plan:** Plans/task_openai_test_Plan.md
 
 ---
 
 ## Original Content
 
-Create a LinkedIn draft post announcing our Silver Agent compliance upgrade.
+# OpenAI Test Task
+
+Type: linkedin_draft
+Priority: high
+
+Write a short professional LinkedIn outreach message 
+for a CTO about AI automation services.
 
 ---
 
