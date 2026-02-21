@@ -847,3 +847,23 @@ Action: Moved to Needs_Action
 2026-02-21 06:31:15Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
 2026-02-21 06:31:15Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
 2026-02-21 06:31:15Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}
+2026-02-21 06:50:24Z - WhatsApp_Watcher: empty_file
+2026-02-21 06:50:24Z - LinkedIn_Watcher: empty_file
+2026-02-21 06:50:24Z - gmail_watcher_skipped_cloud | GMAIL_OAUTH_ENABLED=false
+2026-02-21 06:50:25Z - Agent: started | model=gpt-4o-mini | openai_required=True
+2026-02-21 06:50:27Z - Agent: plan_created | task_new_Plan.md | plan_fallback
+2026-02-21 06:50:28Z - Agent: processed | task_new.md | fallback
+2026-02-21 06:50:28Z - Agent: done | {'tasks_processed': 1, 'plans_created': 1, 'linkedin_drafts_created': 0, 'fallback_count': 2, 'openai_ok_count': 0, 'errors': 0}
+2026-02-21 06:50:29Z - PostApproved: started
+2026-02-21 06:50:29Z - PostApproved: blocked_without_approval | linkedin_draft_task_openai_test_7143767d81c6.md
+2026-02-21 06:50:29Z - PostApproved: blocked_without_approval | linkedin_draft_task_openai_test_bf0c6d5236fa.md
+2026-02-21 06:50:29Z - PostApproved: blocked_without_approval | linkedin_draft_task_real_test_7143767d81c6.md
+2026-02-21 06:50:29Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:50:29Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-02-21 06:50:29Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:50:29Z - PostApproved: simulated_mode | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-02-21 06:50:29Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:50:29Z - PostApproved: simulated_mode | linkedin_draft_test_judge_59986181bbdd.md | kept in Approved/
+2026-02-21 06:50:29Z - linkedin_post_attempt | mode=simulated | reason=simulated_mode
+2026-02-21 06:50:29Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-02-21 06:50:29Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}

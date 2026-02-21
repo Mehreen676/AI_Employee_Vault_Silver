@@ -387,3 +387,21 @@ PROMPT_SNIPPET:
 fallback (no API key)
 ---
 
+---
+[2026-02-21 06:50:27Z] PLAN FILE: task_new_Plan.md
+TASK FILE: task_new.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 06:50:28Z] SUMMARY: task_new.md
+TASK FILE: task_new.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
