@@ -21,6 +21,10 @@ jobs:
   run-silver:
     runs-on: ubuntu-latest
 
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_REQUIRED: ${{ secrets.OPENAI_REQUIRED }}
+
     steps:
       # ---------------------------------------------------------------
       # 1. Checkout with full history so we can push back
