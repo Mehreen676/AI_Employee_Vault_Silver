@@ -868,3 +868,22 @@ Action: Moved to Needs_Action
 2026-02-21 06:50:29Z - PostApproved: simulated_mode | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
 2026-02-21 06:50:29Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}
 2026-02-21 07:21:20Z - gmail_watcher_skipped_cloud | GMAIL_OAUTH_ENABLED=false
+2026-02-21 08:38:38Z - WhatsApp_Watcher: empty_file
+2026-02-21 08:38:38Z - LinkedIn_Watcher: empty_file
+2026-02-21 08:38:38Z - gmail_watcher_skipped_cloud | GMAIL_OAUTH_ENABLED=false
+2026-02-21 08:38:39Z - Agent: started | model= | openai_required=True
+2026-02-21 08:38:39Z - Agent: no_tasks_found
+2026-02-21 08:38:39Z - Agent: done | {'tasks_processed': 0, 'plans_created': 0, 'linkedin_drafts_created': 0, 'fallback_count': 0, 'openai_ok_count': 0, 'errors': 0}
+2026-02-21 08:38:39Z - PostApproved: started
+2026-02-21 08:38:39Z - PostApproved: blocked_without_approval | linkedin_draft_task_openai_test_7143767d81c6.md
+2026-02-21 08:38:39Z - PostApproved: blocked_without_approval | linkedin_draft_task_openai_test_bf0c6d5236fa.md
+2026-02-21 08:38:39Z - PostApproved: blocked_without_approval | linkedin_draft_task_real_test_7143767d81c6.md
+2026-02-21 08:38:39Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-02-21 08:38:39Z - PostApproved: not_configured | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-02-21 08:38:39Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-02-21 08:38:39Z - PostApproved: not_configured | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-02-21 08:38:39Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-02-21 08:38:39Z - PostApproved: not_configured | linkedin_draft_test_judge_59986181bbdd.md | kept in Approved/
+2026-02-21 08:38:39Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-02-21 08:38:39Z - PostApproved: not_configured | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-02-21 08:38:39Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}
