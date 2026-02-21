@@ -190,6 +190,7 @@
 {"ts": "2026-02-21 06:50:29Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
 {"ts": "2026-02-21 06:50:29Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_065029.json"}
 {"ts": "2026-02-21 06:50:29Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
+<<<<<<< HEAD
 {"ts": "2026-02-21 07:01:57Z", "event": "whatsapp_watcher_skip", "reason": "empty_file"}
 {"ts": "2026-02-21 07:01:57Z", "event": "linkedin_watcher_skip", "reason": "empty_file"}
 {"ts": "2026-02-21 07:01:57Z", "event": "gmail_watcher_skipped_cloud", "GMAIL_OAUTH_ENABLED": "false"}
@@ -357,3 +358,6 @@
 {"ts": "2026-02-21 08:29:12Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
 {"ts": "2026-02-21 08:29:12Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_082912.json"}
 {"ts": "2026-02-21 08:29:12Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
+=======
+{"ts": "2026-02-21 07:21:20Z", "event": "gmail_watcher_skipped_cloud", "GMAIL_OAUTH_ENABLED": "false"}
+>>>>>>> f044558 (Fix: Updated silver agent workflow)

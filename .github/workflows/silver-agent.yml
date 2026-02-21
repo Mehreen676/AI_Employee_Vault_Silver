@@ -19,9 +19,10 @@ jobs:
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_2 }}
       OPENAI_REQUIRED: "true"
+      OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+      LINKEDIN_SIMULATED: ${{ secrets.LINKEDIN_SIMULATED }}
 
     steps:
-
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
@@ -48,24 +49,29 @@ jobs:
       - name: "[Watcher 4] LinkedIn (simulated) -> Needs_Action"
         run: python linkedin_watcher.py
 
-      - name: "[Watcher 5] Gmail -> Inbox (guarded by GMAIL_OAUTH_ENABLED)"
-        env:
-          GMAIL_OAUTH_ENABLED: ${{ secrets.GMAIL_OAUTH_ENABLED || 'false' }}
+      # 🔥 ALWAYS create Gmail OAuth files (NO IF CONDITION)
+
+      - name: Create Gmail OAuth Files
+        shell: bash
+        run: |
+          echo '${{ secrets.GMAIL_CLIENT_SECRET_JSON }}' > credentials.json
+          echo '${{ secrets.GMAIL_TOKEN_JSON }}' > token.json
+
+          echo "===== FILE CHECK ====="
+          pwd
+          ls -la
+          echo "======================"
+
+      - name: "[Watcher 5] Gmail -> Inbox"
         run: python gmail_watcher.py
 
       - name: "[Agent] Process tasks — generate Plans & Pending_Approval"
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_2 }}
-          OPENAI_REQUIRED: "true"
-          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL || 'gpt-4o-mini' }}
-          LINKEDIN_SIMULATED: ${{ secrets.LINKEDIN_SIMULATED || 'true' }}
         run: python agent.py
 
       - name: "[Post] LinkedIn: HITL check + post from Approved/ -> Done/"
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
-          LINKEDIN_SIMULATED: ${{ secrets.LINKEDIN_SIMULATED || 'true' }}
         run: python post_approved.py
 
       - name: Commit & Push Results
@@ -92,16 +98,6 @@ jobs:
           git commit -m "Cloud: Silver agent run $(date -u '+%Y-%m-%d %H:%M UTC')"
           git pull origin main --rebase
           git push origin main
-
-      - name: Print Summary
-        run: |
-          echo "========== SILVER RUN SUMMARY =========="
-          echo "Tasks processed: $(grep -c 'Processed:' run_log.md || echo 0)"
-          echo "Plans created: $(ls Plans 2>/dev/null | wc -l || echo 0)"
-          echo "Approved files: $(ls Approved 2>/dev/null | wc -l || echo 0)"
-          echo "Done files: $(ls Done 2>/dev/null | wc -l || echo 0)"
-          echo "Errors: $(grep -ci 'error' run_log.md || echo 0)"
-          echo "========================================"
 
       - name: Upload Evidence Artifacts
         if: always()
