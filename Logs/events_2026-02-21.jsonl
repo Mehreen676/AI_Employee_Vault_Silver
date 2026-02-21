@@ -1192,3 +1192,27 @@
 {"ts": "2026-02-21 21:41:02Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
 {"ts": "2026-02-21 21:41:02Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_214102.json"}
 {"ts": "2026-02-21 21:41:02Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
+{"ts": "2026-02-21 21:56:24Z", "event": "whatsapp_watcher_skip", "reason": "empty_file"}
+{"ts": "2026-02-21 21:56:24Z", "event": "linkedin_watcher_skip", "reason": "empty_file"}
+{"ts": "2026-02-21 21:56:24Z", "event": "gmail_watcher_started"}
+{"ts": "2026-02-21 21:56:25Z", "event": "gmail_ingested", "file": "email_20260221_215625_19c7b2ad2c7912f1.md"}
+{"ts": "2026-02-21 21:56:27Z", "event": "gmail_watcher_done", "ingested": 1}
+{"ts": "2026-02-21 21:56:28Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": true}
+{"ts": "2026-02-21 21:56:28Z", "event": "agent_no_tasks"}
+{"ts": "2026-02-21 21:56:28Z", "event": "agent_summary", "tasks_processed": 0, "plans_created": 0, "linkedin_drafts_created": 0, "fallback_count": 0, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-21 21:56:28Z", "event": "post_approved_started"}
+{"ts": "2026-02-21 21:56:28Z", "event": "blocked_without_approval", "file": "linkedin_draft_task1_ec417a5820f7.md", "location": "Pending_Approval/", "action_required": "approve.py"}
+{"ts": "2026-02-21 21:56:28Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
+{"ts": "2026-02-21 21:56:28Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_bf0c6d5236fa.md", "location": "Pending_Approval/", "action_required": "approve.py"}
+{"ts": "2026-02-21 21:56:28Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_real_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
+{"ts": "2026-02-21 21:56:28Z", "event": "blocked_without_approval", "file": "linkedin_draft_test_ai_788d586d2538.md", "location": "Pending_Approval/", "action_required": "approve.py"}
+{"ts": "2026-02-21 21:56:28Z", "event": "hitl_check_done", "blocked_count": 5}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_215628.json"}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_215628.json"}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_judge_59986181bbdd.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_215628.json"}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
+{"ts": "2026-02-21 21:56:28Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_215628.json"}
+{"ts": "2026-02-21 21:56:28Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
