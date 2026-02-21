@@ -447,92 +447,28 @@
 {"ts": "2026-02-21 09:07:14Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
 {"ts": "2026-02-21 09:07:14Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_090714.json"}
 {"ts": "2026-02-21 09:07:14Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
-{"ts": "2026-02-21 09:10:14Z", "event": "whatsapp_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:10:15Z", "event": "linkedin_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:10:15Z", "event": "gmail_watcher_started"}
-{"ts": "2026-02-21 09:10:16Z", "event": "gmail_ingested", "file": "email_20260221_091016_19c7b2ad2c7912f1.md"}
-{"ts": "2026-02-21 09:10:17Z", "event": "gmail_watcher_done", "ingested": 1}
-{"ts": "2026-02-21 09:10:18Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": true}
-{"ts": "2026-02-21 09:10:21Z", "event": "plan_created", "file": "demo_ai_real_estate_Plan.md", "status": "plan_fallback", "task": "demo_ai_real_estate.md"}
-{"ts": "2026-02-21 09:10:24Z", "event": "task_processed", "file": "demo_ai_real_estate.md", "status": "fallback", "hash": "61f6ad761b4e"}
-{"ts": "2026-02-21 09:10:24Z", "event": "agent_summary", "tasks_processed": 1, "plans_created": 1, "linkedin_drafts_created": 0, "fallback_count": 2, "openai_ok_count": 0, "errors": 0}
-{"ts": "2026-02-21 09:10:24Z", "event": "post_approved_started"}
-{"ts": "2026-02-21 09:10:24Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:10:24Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_bf0c6d5236fa.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:10:24Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_real_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:10:24Z", "event": "hitl_check_done", "blocked_count": 3}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091024.json"}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091024.json"}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_judge_59986181bbdd.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091024.json"}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:10:24Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091024.json"}
-{"ts": "2026-02-21 09:10:24Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
-{"ts": "2026-02-21 09:18:36Z", "event": "whatsapp_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:18:36Z", "event": "linkedin_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:18:36Z", "event": "gmail_watcher_started"}
-{"ts": "2026-02-21 09:18:38Z", "event": "gmail_ingested", "file": "email_20260221_091838_19c7b2ad2c7912f1.md"}
-{"ts": "2026-02-21 09:18:39Z", "event": "gmail_watcher_done", "ingested": 1}
-{"ts": "2026-02-21 09:18:40Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": true}
-{"ts": "2026-02-21 09:18:40Z", "event": "agent_no_tasks"}
-{"ts": "2026-02-21 09:18:40Z", "event": "agent_summary", "tasks_processed": 0, "plans_created": 0, "linkedin_drafts_created": 0, "fallback_count": 0, "openai_ok_count": 0, "errors": 0}
-{"ts": "2026-02-21 09:18:40Z", "event": "post_approved_started"}
-{"ts": "2026-02-21 09:18:40Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:18:40Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_bf0c6d5236fa.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:18:40Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_real_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:18:40Z", "event": "hitl_check_done", "blocked_count": 3}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091840.json"}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091840.json"}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_judge_59986181bbdd.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091840.json"}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:18:40Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_091840.json"}
-{"ts": "2026-02-21 09:18:40Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
-{"ts": "2026-02-21 09:46:44Z", "event": "whatsapp_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:46:44Z", "event": "linkedin_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:46:44Z", "event": "gmail_watcher_started"}
-{"ts": "2026-02-21 09:46:45Z", "event": "gmail_ingested", "file": "email_20260221_094645_19c7b2ad2c7912f1.md"}
-{"ts": "2026-02-21 09:46:47Z", "event": "gmail_watcher_done", "ingested": 1}
-{"ts": "2026-02-21 09:46:47Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": true}
-{"ts": "2026-02-21 09:46:47Z", "event": "agent_no_tasks"}
-{"ts": "2026-02-21 09:46:47Z", "event": "agent_summary", "tasks_processed": 0, "plans_created": 0, "linkedin_drafts_created": 0, "fallback_count": 0, "openai_ok_count": 0, "errors": 0}
-{"ts": "2026-02-21 09:46:47Z", "event": "post_approved_started"}
-{"ts": "2026-02-21 09:46:47Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:46:47Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_bf0c6d5236fa.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:46:47Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_real_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:46:47Z", "event": "hitl_check_done", "blocked_count": 3}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_094647.json"}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_094647.json"}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_judge_59986181bbdd.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_094647.json"}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:46:47Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_094647.json"}
-{"ts": "2026-02-21 09:46:47Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
-{"ts": "2026-02-21 09:59:09Z", "event": "whatsapp_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:59:09Z", "event": "linkedin_watcher_skip", "reason": "empty_file"}
-{"ts": "2026-02-21 09:59:09Z", "event": "gmail_watcher_started"}
-{"ts": "2026-02-21 09:59:11Z", "event": "gmail_ingested", "file": "email_20260221_095911_19c7b2ad2c7912f1.md"}
-{"ts": "2026-02-21 09:59:12Z", "event": "gmail_watcher_done", "ingested": 1}
-{"ts": "2026-02-21 09:59:13Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": true}
-{"ts": "2026-02-21 09:59:13Z", "event": "agent_no_tasks"}
-{"ts": "2026-02-21 09:59:13Z", "event": "agent_summary", "tasks_processed": 0, "plans_created": 0, "linkedin_drafts_created": 0, "fallback_count": 0, "openai_ok_count": 0, "errors": 0}
-{"ts": "2026-02-21 09:59:13Z", "event": "post_approved_started"}
-{"ts": "2026-02-21 09:59:13Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:59:13Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_openai_test_bf0c6d5236fa.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:59:13Z", "event": "blocked_without_approval", "file": "linkedin_draft_task_real_test_7143767d81c6.md", "location": "Pending_Approval/", "action_required": "approve.py"}
-{"ts": "2026-02-21 09:59:13Z", "event": "hitl_check_done", "blocked_count": 3}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_1_fae28a47a687.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_095913.json"}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_li_20260220_042906_2_73017b347e6a.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_095913.json"}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_judge_59986181bbdd.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_095913.json"}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_post_attempt", "mode": "simulated", "reason": "simulated_mode"}
-{"ts": "2026-02-21 09:59:13Z", "event": "linkedin_not_posted_kept", "file": "linkedin_draft_test_marketing_d6b334630fa8.md", "reason": "simulated_mode", "evidence": "/home/runner/work/AI_Employee_Vault_Silver/AI_Employee_Vault_Silver/Logs/linkedin_simulated_20260221_095913.json"}
-{"ts": "2026-02-21 09:59:13Z", "event": "post_approved_done", "found": 4, "posted": 0, "skipped_duplicate": 0, "skipped_not_configured": 4, "errors": 0}
+{"ts": "2026-02-21 09:32:02Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": false}
+{"ts": "2026-02-21 09:32:02Z", "event": "plan_created", "file": "demo_ai_real_estate_Plan.md", "status": "plan_fallback", "task": "demo_ai_real_estate.md"}
+{"ts": "2026-02-21 09:32:02Z", "event": "task_processed", "file": "demo_ai_real_estate.md", "status": "fallback", "hash": "61f6ad761b4e"}
+{"ts": "2026-02-21 09:32:02Z", "event": "agent_summary", "tasks_processed": 1, "plans_created": 1, "linkedin_drafts_created": 0, "fallback_count": 2, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-21 09:42:47Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": false}
+{"ts": "2026-02-21 09:42:47Z", "event": "agent_no_tasks"}
+{"ts": "2026-02-21 09:42:47Z", "event": "agent_summary", "tasks_processed": 0, "plans_created": 0, "linkedin_drafts_created": 0, "fallback_count": 0, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-21 09:45:34Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": false}
+{"ts": "2026-02-21 09:45:39Z", "event": "plan_created", "file": "task1_Plan.md", "status": "plan_fallback", "task": "task1.md"}
+{"ts": "2026-02-21 09:45:46Z", "event": "linkedin_draft_created", "file": "linkedin_draft_task1_ec417a5820f7.md", "source": "task1.md", "status": "linkedin_fallback"}
+{"ts": "2026-02-21 09:45:46Z", "event": "task_processed", "file": "task1.md", "status": "fallback", "hash": "ec417a5820f7"}
+{"ts": "2026-02-21 09:45:46Z", "event": "agent_summary", "tasks_processed": 1, "plans_created": 1, "linkedin_drafts_created": 1, "fallback_count": 2, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-21 09:47:44Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": false}
+{"ts": "2026-02-21 09:47:49Z", "event": "plan_created", "file": "task2_Plan.md", "status": "plan_fallback", "task": "task2.md"}
+{"ts": "2026-02-21 09:47:53Z", "event": "task_processed", "file": "task2.md", "status": "fallback", "hash": "ea7eaa64df49"}
+{"ts": "2026-02-21 09:47:53Z", "event": "agent_summary", "tasks_processed": 1, "plans_created": 1, "linkedin_drafts_created": 0, "fallback_count": 2, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-21 09:58:14Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": false}
+{"ts": "2026-02-21 09:58:14Z", "event": "agent_no_tasks"}
+{"ts": "2026-02-21 09:58:14Z", "event": "agent_summary", "tasks_processed": 0, "plans_created": 0, "linkedin_drafts_created": 0, "fallback_count": 0, "openai_ok_count": 0, "errors": 0}
+{"ts": "2026-02-21 09:59:17Z", "event": "agent_started", "model": "gpt-4o-mini", "openai_required": false}
+{"ts": "2026-02-21 09:59:22Z", "event": "plan_created", "file": "test_ai_Plan.md", "status": "openai_ok", "task": "test_ai.md"}
+{"ts": "2026-02-21 09:59:30Z", "event": "linkedin_draft_created", "file": "linkedin_draft_test_ai_788d586d2538.md", "source": "test_ai.md", "status": "openai_ok"}
+{"ts": "2026-02-21 09:59:30Z", "event": "task_processed", "file": "test_ai.md", "status": "openai_ok", "hash": "788d586d2538"}
+{"ts": "2026-02-21 09:59:30Z", "event": "agent_summary", "tasks_processed": 1, "plans_created": 1, "linkedin_drafts_created": 1, "fallback_count": 0, "openai_ok_count": 1, "errors": 0}
+{"ts": "2026-02-21 10:16:42Z", "event": "gmail_watcher_started"}

@@ -1,0 +1,1 @@
+Create a 5-step plan for onboarding a new employee.

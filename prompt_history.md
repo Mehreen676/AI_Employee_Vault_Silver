@@ -424,7 +424,7 @@ fallback (no API key)
 ---
 
 ---
-[2026-02-21 09:10:21Z] PLAN FILE: demo_ai_real_estate_Plan.md
+[2026-02-21 09:32:02Z] PLAN FILE: demo_ai_real_estate_Plan.md
 TASK FILE: demo_ai_real_estate.md
 MODEL: gpt-4o-mini
 STATUS: plan_fallback
@@ -433,11 +433,120 @@ fallback (no API key)
 ---
 
 ---
-[2026-02-21 09:10:24Z] SUMMARY: demo_ai_real_estate.md
+[2026-02-21 09:32:02Z] SUMMARY: demo_ai_real_estate.md
 TASK FILE: demo_ai_real_estate.md
 MODEL: gpt-4o-mini
 STATUS: fallback
 PROMPT_SNIPPET:
 fallback (no API key)
+---
+
+---
+[2026-02-21 09:45:39Z] PLAN FILE: task1_Plan.md
+TASK FILE: task1.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 09:45:42Z] SUMMARY: task1.md
+TASK FILE: task1.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 09:45:46Z] LINKEDIN DRAFT: linkedin_draft_task1_ec417a5820f7.md
+TASK FILE: task1.md
+MODEL: gpt-4o-mini
+STATUS: linkedin_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 09:47:49Z] PLAN FILE: task2_Plan.md
+TASK FILE: task2.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 09:47:53Z] SUMMARY: task2.md
+TASK FILE: task2.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 09:59:22Z] PLAN FILE: test_ai_Plan.md
+TASK FILE: test_ai.md
+MODEL: gpt-4o-mini
+STATUS: openai_ok
+PROMPT_SNIPPET:
+You are a senior AI business analyst. Given the task below, produce a structured Plan.
+
+Output EXACTLY this format:
+
+## 1. Task Analysis
+<1-3 sentence analysis of what is being asked>
+
+## 2. Step-by-Step Plan
+1. <step>
+2. <step>
+3. <step>
+
+## 3. Risks & Edge Cases
+- <risk or edge case>
+- <risk or edge case>
+
+## 4. Output Checklist
+- [ ] <deliverable>
+- [ ] <deliverable>
+
+Keep it concise and actionable. Do NOT invent facts.
+
+TASK:
+Write a professional LinkedIn post about launching a new AI automation product.
+
+---
+
+---
+[2026-02-21 09:59:25Z] SUMMARY: test_ai.md
+TASK FILE: test_ai.md
+MODEL: gpt-4o-mini
+STATUS: openai_ok
+PROMPT_SNIPPET:
+You are an AI employee. Summarize the task clearly in 3-6 bullet points.
+Then write a short 'Next actions' section (1-3 bullets).
+Keep it concise. Do NOT invent details.
+
+TASK:
+Write a professional LinkedIn post about launching a new AI automation product.
+
+---
+
+---
+[2026-02-21 09:59:30Z] LINKEDIN DRAFT: linkedin_draft_test_ai_788d586d2538.md
+TASK FILE: test_ai.md
+MODEL: gpt-4o-mini
+STATUS: openai_ok
+PROMPT_SNIPPET:
+You are a professional LinkedIn content writer.
+Based on the business task below, write a compelling LinkedIn post (max 200 words).
+Use a professional but engaging tone. Include 2-3 relevant hashtags at the end.
+Do NOT include any placeholder text like [Company Name] — write generically.
+
+TASK:
+Write a professional LinkedIn post about launching a new AI automation product.
+
 ---
 
