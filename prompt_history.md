@@ -405,3 +405,21 @@ PROMPT_SNIPPET:
 fallback (no API key)
 ---
 
+---
+[2026-02-21 07:02:02Z] PLAN FILE: task_ai_realestate_Plan.md
+TASK FILE: task_ai_realestate.md
+MODEL: gpt-4o-mini
+STATUS: plan_fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
+---
+[2026-02-21 07:02:05Z] SUMMARY: task_ai_realestate.md
+TASK FILE: task_ai_realestate.md
+MODEL: gpt-4o-mini
+STATUS: fallback
+PROMPT_SNIPPET:
+fallback (no API key)
+---
+
