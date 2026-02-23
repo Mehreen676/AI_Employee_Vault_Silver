@@ -11,6 +11,12 @@ client_secret*.json
 oauth_*.json
 
 # =========================
+# Node / npm
+# =========================
+package-lock.json
+node_modules/
+
+# =========================
 # Python cache
 # =========================
 __pycache__/

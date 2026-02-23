@@ -222,6 +222,10 @@ LinkedIn drafts are tagged `[LINKEDIN]` in the list view. Every approval is logg
 
 ## LinkedIn Posting (`post_approved.py`)
 
+> **Silver Tier: LinkedIn posting is SIMULATED by default — no real posts are made.**
+> When simulated, the system writes evidence JSON to `Logs/linkedin_simulated_<timestamp>.json` and logs the result to `run_log.md`. The repo is OAuth-ready (`LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` configured), but real posting requires LinkedIn **"Share on LinkedIn"** product access/approval from LinkedIn's developer portal.
+> **Prepared for real OAuth, pending LinkedIn approval.**
+
 `post_approved.py` reads only from `Approved/`. Files in `Pending_Approval/` are never touched by this script.
 
 ### Simulated Mode (default — no credentials needed)
@@ -230,8 +234,9 @@ LinkedIn drafts are tagged `[LINKEDIN]` in the list view. Every approval is logg
 - File stays in `Approved/` (not moved to `Done/`).
 - Safe to run in any environment — no public posts are made.
 
-### Real Posting Mode
+### Real Posting Mode (Gold Tier — once LinkedIn approval granted)
 
+- Requires LinkedIn **"Share on LinkedIn"** product access enabled on the Developer App — without this LinkedIn-gated approval, the UGC Post API rejects calls even with a valid token.
 - Requires all three: `LINKEDIN_ACCESS_TOKEN` + `LINKEDIN_PERSON_URN` + `LINKEDIN_SIMULATED=false`.
 - Calls the LinkedIn UGC Post API via `mcp_linkedin_ops.create_post()`.
 - On success: file moves to `Done/`, task hash saved to `Logs/posted_ids.json`.
@@ -244,7 +249,9 @@ LinkedIn drafts are tagged `[LINKEDIN]` in the list view. Every approval is logg
 
 ## LinkedIn OAuth (Prepared — Not Used in Silver)
 
-LinkedIn OAuth credentials have been registered and stored in GitHub Actions Secrets as proof of integration readiness. No live OAuth flow executes during Silver tier operation.
+LinkedIn OAuth credentials have been registered and stored in GitHub Actions Secrets as proof of integration readiness. No live OAuth flow executes during Silver tier operation. **Prepared for real OAuth, pending LinkedIn approval.**
+
+> **Note on LinkedIn product approval:** Live posting via the UGC Post API requires the **"Share on LinkedIn"** product to be explicitly enabled on the LinkedIn Developer App. This is a LinkedIn-gated approval — it is not automatic and must be separately requested. Silver does not make live API calls, so this approval is not required for Silver evaluation; it is the sole remaining gate before Gold-tier real posting can be activated.
 
 - **A LinkedIn Developer App has been created** and `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` are stored as GitHub Repository Secrets. The client secret never appears in the repository or workflow logs.
 - **Silver keeps `LINKEDIN_SIMULATED=true` by default.** The mode gate in `mcp_linkedin_ops.py` checks this flag before any HTTP request is made — if it is `true`, the code writes a simulated evidence JSON file and returns without contacting the LinkedIn API. No public posts can occur in Silver.
