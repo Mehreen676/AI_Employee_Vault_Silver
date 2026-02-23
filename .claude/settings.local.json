@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python agent.py:*)",
-      "Bash(python post_approved.py:*)"
-    ]
-  }
-}
