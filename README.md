@@ -8,6 +8,8 @@
 A **Personal AI Employee** system for Hackathon 0 Silver Tier.
 Multi-channel task ingestion → OpenAI-powered reasoning plans → LinkedIn HITL approval → cloud automation via GitHub Actions.
 
+> **LinkedIn OAuth note:** LinkedIn OAuth integration is prepared for future real mode, but Silver runs in simulated mode only. No live LinkedIn API calls are made during Silver tier operation.
+
 > **Obsidian note:** This repository can be opened as an Obsidian vault (`Dashboard.md`, `Company_Handbook.md`, `Welcome.md` are vault documents). The automation pipeline — watchers, agent, approve, post — runs entirely via Python scripts and GitHub Actions and **does not require Obsidian** to be installed or running.
 
 ---
@@ -240,6 +242,18 @@ LinkedIn drafts are tagged `[LINKEDIN]` in the list view. Every approval is logg
 
 ---
 
+## LinkedIn OAuth (Prepared — Not Used in Silver)
+
+LinkedIn OAuth credentials have been registered and stored in GitHub Actions Secrets as proof of integration readiness. No live OAuth flow executes during Silver tier operation.
+
+- **A LinkedIn Developer App has been created** and `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` are stored as GitHub Repository Secrets. The client secret never appears in the repository or workflow logs.
+- **Silver keeps `LINKEDIN_SIMULATED=true` by default.** The mode gate in `mcp_linkedin_ops.py` checks this flag before any HTTP request is made — if it is `true`, the code writes a simulated evidence JSON file and returns without contacting the LinkedIn API. No public posts can occur in Silver.
+- **Real OAuth + real posting is a Gold-tier switch.** Activating live posting requires three explicit conditions: a valid `LINKEDIN_ACCESS_TOKEN` (obtained via the OAuth Authorization Code flow outside of GitHub Actions), a correct `LINKEDIN_PERSON_URN`, and `LINKEDIN_SIMULATED=false`. Changing any one of these alone is insufficient — all three must be satisfied simultaneously.
+
+This design proves future integration readiness while making accidental public posts structurally impossible during Silver evaluation.
+
+---
+
 ## MCP Tool Layer
 
 | Module | Responsibility |
@@ -366,9 +380,13 @@ Add these as **GitHub Repository Secrets** (Settings → Secrets → Actions):
 | `LINKEDIN_ACCESS_TOKEN` | Optional | LinkedIn OAuth token for live posting |
 | `LINKEDIN_PERSON_URN` | Optional | e.g. `urn:li:person:AbCdEfGh` |
 | `LINKEDIN_SIMULATED` | Optional | `false` = enable real posting; default `true` |
+| `LINKEDIN_CLIENT_ID` | Optional | LinkedIn Developer App client ID — for future OAuth enable |
+| `LINKEDIN_CLIENT_SECRET` | Optional | LinkedIn Developer App client secret — for future OAuth enable |
 | `GMAIL_OAUTH_ENABLED` | Optional | `true` = run Gmail watcher step in cloud; default `false` |
 | `GMAIL_CLIENT_SECRET_JSON` | Optional | Full JSON contents of `credentials.json` |
 | `GMAIL_TOKEN_JSON` | Optional | Full JSON contents of `token.json` |
+
+> **Silver does not run live OAuth; `LINKEDIN_CLIENT_ID` and `LINKEDIN_CLIENT_SECRET` are stored only as future-ready proof. Real OAuth flow and live posting will be enabled in Gold tier by setting `LINKEDIN_SIMULATED=false` and providing a valid access token.**
 
 **Local development:** `cp .env.example .env` — fill in values. `.env` is gitignored; never commit it.
 
