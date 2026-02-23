@@ -76,6 +76,16 @@ Multi-channel task ingestion → OpenAI-powered reasoning plans → LinkedIn HIT
 
 ---
 
+## Architecture (Visual)
+
+The diagram below shows the full pipeline from ingestion to evidence output. Rendered directly from `docs/architecture.svg` — no external tooling required.
+
+![Architecture](docs/architecture.svg)
+
+> **Key design signal for judges:** The pipeline has four hard layers — Ingestion → Agent → HITL → Evidence. A task cannot skip the HITL layer; `post_approved.py` reads **only** from `Approved/`, which is populated **only** by the manual `approve.py` step. LinkedIn is simulated by default; no real post can occur unless three env vars are simultaneously set.
+
+---
+
 ## File Structure
 
 ```
@@ -258,6 +268,75 @@ LinkedIn OAuth credentials have been registered and stored in GitHub Actions Sec
 - **Real OAuth + real posting is a Gold-tier switch.** Activating live posting requires three explicit conditions: a valid `LINKEDIN_ACCESS_TOKEN` (obtained via the OAuth Authorization Code flow outside of GitHub Actions), a correct `LINKEDIN_PERSON_URN`, and `LINKEDIN_SIMULATED=false`. Changing any one of these alone is insufficient — all three must be satisfied simultaneously.
 
 This design proves future integration readiness while making accidental public posts structurally impossible during Silver evaluation.
+
+---
+
+## Why This Design Prevents Accidental Posting
+
+This section summarises the layered guardrails that make it structurally impossible for Silver to post to LinkedIn without explicit human action and correct environment configuration.
+
+| # | Guardrail | How it works |
+|---|-----------|-------------|
+| 1 | **`LINKEDIN_SIMULATED=true` by default** | `mcp_linkedin_ops.create_post()` checks this flag **before** any HTTP request. If `true`, it writes a simulated evidence JSON and returns — the LinkedIn API is never contacted. No credential is required to run safely. |
+| 2 | **Pending_Approval gate** | `agent.py` places LinkedIn drafts in `Pending_Approval/`. `post_approved.py` reads **only** from `Approved/`. A file can never jump between these two folders automatically. |
+| 3 | **Manual HITL (`approve.py`)** | `approve.py` is a CLI tool; it is **never called by the GitHub Actions workflow**. A human must explicitly run it to move a draft from `Pending_Approval/` to `Approved/`. There is no timer, webhook, or automation that triggers it. |
+| 4 | **Triple env-var requirement for live mode** | Live posting requires **all three** simultaneously: `LINKEDIN_SIMULATED=false` + `LINKEDIN_ACCESS_TOKEN` (valid, non-expired) + `LINKEDIN_PERSON_URN`. Missing any single one keeps the system in safe simulated mode. |
+| 5 | **Idempotency hash registry** | `Logs/posted_ids.json` stores a SHA1 hash of every posted task. Re-running the workflow skips already-posted items — even if the workflow is triggered twice in the same minute. |
+| 6 | **No secrets logged** | `mcp_linkedin_ops.py` logs only boolean flags (`token_present`, `person_urn_present`) — the token value is never written to `run_log.md`, JSONL, or any evidence file. |
+
+---
+
+## Failure Simulation Proof
+
+These two demos can be run locally to verify safe degradation. No real credentials are needed.
+
+### Demo 1 — OpenAI API missing or quota exceeded (HTTP 429)
+
+```bash
+# 1. Drop a task
+echo "Draft a blog post about AI productivity tools." > Inbox/test_fallback.md
+python watcher_inbox.py        # moves to Needs_Action/
+
+# 2. Run agent with no key (or an invalid/quota-exhausted key)
+OPENAI_API_KEY="" python agent.py
+
+# Expected output (run_log.md):
+#   Agent: processed | task=test_fallback.md | status=plan_fallback
+#   (or status=fallback / status=linkedin_fallback depending on task type)
+
+# 3. Verify Plans/ was still created (deterministic fallback plan)
+ls Plans/
+# → test_fallback_Plan.md  (fallback plan produced; no crash)
+
+# 4. Check run_log.md for fallback evidence
+grep "fallback" run_log.md | tail -5
+```
+
+**What to observe:** The agent never raises an exception — it catches all OpenAI errors (`no_api_key`, HTTP 429 `insufficient_quota`, network timeout) and produces a structured fallback plan. The `status` field in `run_log.md` will be `plan_fallback`, `fallback`, or `linkedin_fallback` depending on skill. The pipeline continues to the next task.
+
+---
+
+### Demo 2 — LinkedIn credentials absent (simulated mode, no crash)
+
+```bash
+# Run post_approved.py with no LinkedIn credentials set
+# (LINKEDIN_SIMULATED defaults to true; no token needed)
+echo "Test approved draft." > Approved/linkedin_draft_demo_test.md
+python post_approved.py
+
+# Expected output:
+#   Not posted (simulated_mode). File kept in Approved/
+#   Evidence written to: Logs/linkedin_simulated_<timestamp>.json
+
+# Verify evidence JSON was created
+ls Logs/linkedin_simulated_*.json | tail -1
+
+# Inspect it
+cat $(ls -t Logs/linkedin_simulated_*.json | head -1)
+# → {"mode": "simulated", "token_present": false, "person_urn_present": false, ...}
+```
+
+**What to observe:** With `LINKEDIN_SIMULATED=true` (the Silver default), `post_approved.py` never attempts an HTTP call. It writes structured evidence JSON and returns cleanly. No exception. No partial post. The file stays in `Approved/` for re-processing when real credentials are eventually provided.
 
 ---
 

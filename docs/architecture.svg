@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 590" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="760" height="590" fill="#0d1117" rx="10"/>
+
+  <!-- Title -->
+  <text x="380" y="26" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="bold">AI Employee Vault · Silver Tier · Pipeline Architecture</text>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYER 1 — INGESTION
+       ═══════════════════════════════════════════════════════════ -->
+  <rect x="14" y="38" width="732" height="106" fill="#161b22" stroke="#21262d" stroke-width="1.5" rx="6"/>
+  <text x="380" y="56" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">INGESTION LAYER  (5 Watchers)</text>
+
+  <!-- watcher_inbox -->
+  <rect x="24"  y="64" width="126" height="40" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="87"  y="80" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">watcher_inbox</text>
+  <text x="87"  y="96" text-anchor="middle" fill="#8b949e" font-size="9">Inbox/ → Needs_Action/</text>
+
+  <!-- watcher_manual -->
+  <rect x="160" y="64" width="126" height="40" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="223" y="80" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">watcher_manual</text>
+  <text x="223" y="96" text-anchor="middle" fill="#8b949e" font-size="9">manual_input.txt</text>
+
+  <!-- whatsapp_watcher -->
+  <rect x="296" y="64" width="140" height="40" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="366" y="80" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">whatsapp_watcher</text>
+  <text x="366" y="96" text-anchor="middle" fill="#8b949e" font-size="9">whatsapp_input.txt (sim.)</text>
+
+  <!-- linkedin_watcher -->
+  <rect x="446" y="64" width="130" height="40" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="511" y="80" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">linkedin_watcher</text>
+  <text x="511" y="96" text-anchor="middle" fill="#8b949e" font-size="9">linkedin_input.txt (sim.)</text>
+
+  <!-- gmail_watcher -->
+  <rect x="586" y="64" width="150" height="40" fill="#1c2128" stroke="#238636" rx="4"/>
+  <text x="661" y="80" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">gmail_watcher</text>
+  <text x="661" y="96" text-anchor="middle" fill="#3fb950" font-size="9">Gmail OAuth (guarded)</text>
+
+  <!-- convergence label -->
+  <text x="380" y="130" text-anchor="middle" fill="#c9d1d9" font-size="10" font-weight="bold">Needs_Action/</text>
+
+  <!-- arrow 1 → 2 -->
+  <line x1="380" y1="134" x2="380" y2="152" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYER 2 — AGENT
+       ═══════════════════════════════════════════════════════════ -->
+  <rect x="14" y="154" width="732" height="116" fill="#161b22" stroke="#21262d" stroke-width="1.5" rx="6"/>
+  <text x="380" y="172" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">AGENT LAYER  (agent.py)</text>
+
+  <!-- Skills -->
+  <rect x="24" y="180" width="196" height="58" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="122" y="196" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">Skills / Planner</text>
+  <text x="122" y="211" text-anchor="middle" fill="#8b949e" font-size="9">planning_skill → Plans/</text>
+  <text x="122" y="225" text-anchor="middle" fill="#8b949e" font-size="9">summarize · linkedin skill</text>
+
+  <!-- OpenAI -->
+  <rect x="230" y="180" width="168" height="58" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="314" y="196" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">OpenAI API</text>
+  <text x="314" y="211" text-anchor="middle" fill="#8b949e" font-size="9">gpt-4o-mini  (primary)</text>
+  <text x="314" y="225" text-anchor="middle" fill="#f0883e" font-size="9">429 / error → fallback</text>
+
+  <!-- MCP Tools -->
+  <rect x="408" y="180" width="328" height="58" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="572" y="196" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">MCP Tool Layer</text>
+  <text x="572" y="211" text-anchor="middle" fill="#8b949e" font-size="9">file · linkedin · email · calendar ops</text>
+  <text x="572" y="225" text-anchor="middle" fill="#f0883e" font-size="9">LinkedIn SIMULATED=true (no real posts)</text>
+
+  <!-- arrow 2 → 3 -->
+  <line x1="380" y1="252" x2="380" y2="270" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYER 3 — HITL
+       ═══════════════════════════════════════════════════════════ -->
+  <rect x="14" y="272" width="732" height="108" fill="#161b22" stroke="#21262d" stroke-width="1.5" rx="6"/>
+  <text x="380" y="290" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">HITL LAYER  (Human-in-the-Loop)</text>
+
+  <!-- Pending_Approval -->
+  <rect x="24" y="298" width="158" height="40" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="103" y="313" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">Pending_Approval/</text>
+  <text x="103" y="329" text-anchor="middle" fill="#8b949e" font-size="9">summaries + LinkedIn drafts</text>
+
+  <line x1="182" y1="318" x2="205" y2="318" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- approve.py -->
+  <rect x="207" y="298" width="148" height="40" fill="#1c2128" stroke="#d29922" rx="4"/>
+  <text x="281" y="313" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">approve.py</text>
+  <text x="281" y="329" text-anchor="middle" fill="#d29922" font-size="9">MANUAL — human only</text>
+
+  <line x1="355" y1="318" x2="378" y2="318" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Approved -->
+  <rect x="380" y="298" width="128" height="40" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="444" y="313" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">Approved/</text>
+  <text x="444" y="329" text-anchor="middle" fill="#3fb950" font-size="9">human-approved only</text>
+
+  <line x1="508" y1="318" x2="531" y2="318" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- post_approved.py -->
+  <rect x="533" y="298" width="203" height="40" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="634" y="313" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">post_approved.py</text>
+  <text x="634" y="329" text-anchor="middle" fill="#8b949e" font-size="9">simulated → evidence JSON</text>
+
+  <!-- HITL note -->
+  <text x="380" y="360" text-anchor="middle" fill="#8b949e" font-size="9">No file may reach post_approved.py without passing through approve.py first</text>
+
+  <!-- arrow 3 → 4 -->
+  <line x1="380" y1="364" x2="380" y2="382" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYER 4 — EVIDENCE
+       ═══════════════════════════════════════════════════════════ -->
+  <rect x="14" y="384" width="732" height="100" fill="#161b22" stroke="#21262d" stroke-width="1.5" rx="6"/>
+  <text x="380" y="402" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">EVIDENCE LAYER  (Outputs &amp; Audit)</text>
+
+  <rect x="24"  y="410" width="156" height="42" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="102" y="426" text-anchor="middle" fill="#e6edf3" font-size="9.5" font-weight="bold">Plans/  ·  Done/</text>
+  <text x="102" y="442" text-anchor="middle" fill="#8b949e" font-size="9">task plans + completed files</text>
+
+  <rect x="190" y="410" width="186" height="42" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="283" y="426" text-anchor="middle" fill="#e6edf3" font-size="9.5" font-weight="bold">run_log.md · events_*.jsonl</text>
+  <text x="283" y="442" text-anchor="middle" fill="#8b949e" font-size="9">UTC audit log + JSONL events</text>
+
+  <rect x="386" y="410" width="196" height="42" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="484" y="426" text-anchor="middle" fill="#e6edf3" font-size="9.5" font-weight="bold">linkedin_simulated_*.json</text>
+  <text x="484" y="442" text-anchor="middle" fill="#f0883e" font-size="9">simulated evidence (Silver default)</text>
+
+  <rect x="592" y="410" width="144" height="42" fill="#1c2128" stroke="#30363d" rx="4"/>
+  <text x="664" y="426" text-anchor="middle" fill="#e6edf3" font-size="9.5" font-weight="bold">prompt_history.md</text>
+  <text x="664" y="442" text-anchor="middle" fill="#8b949e" font-size="9">full prompt audit trail</text>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LEGEND
+       ═══════════════════════════════════════════════════════════ -->
+  <rect x="14" y="496" width="732" height="80" fill="#161b22" stroke="#21262d" stroke-width="1" rx="4"/>
+  <text x="380" y="514" text-anchor="middle" fill="#8b949e" font-size="10" font-weight="bold">LEGEND / NOTES</text>
+
+  <rect x="28" y="522" width="10" height="10" fill="#1c2128" stroke="#238636"/>
+  <text x="42" y="532" fill="#3fb950" font-size="9">Gmail OAuth-guarded (GMAIL_OAUTH_ENABLED=true, cloud only)</text>
+
+  <rect x="28" y="540" width="10" height="10" fill="#1c2128" stroke="#d29922"/>
+  <text x="42" y="550" fill="#d29922" font-size="9">Manual HITL (approve.py is never called automatically by the pipeline)</text>
+
+  <text x="420" y="532" fill="#f0883e" font-size="9">LinkedIn SIMULATED=true by default — no real posts in Silver tier</text>
+  <text x="420" y="550" fill="#8b949e" font-size="9">OpenAI 429 / quota error → deterministic fallback (plans still produced)</text>
+
+  <!-- Footer -->
+  <text x="380" y="584" text-anchor="middle" fill="#30363d" font-size="8.5">GitHub Actions · cron every 10 min · ubuntu-latest · AI_Employee_Vault_Silver</text>
+</svg>
