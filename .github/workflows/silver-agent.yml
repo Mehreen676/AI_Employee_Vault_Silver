@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
 
+# Cancel any in-progress run of the same workflow before starting a new one.
 concurrency:
   group: silver-agent
   cancel-in-progress: true
@@ -24,6 +25,7 @@ jobs:
       GMAIL_OAUTH_ENABLED: ${{ secrets.GMAIL_OAUTH_ENABLED || 'false' }}
 
     steps:
+      # ── Setup ──────────────────────────────────────────────────────────────
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
@@ -38,6 +40,7 @@ jobs:
       - name: Install Dependencies
         run: pip install --quiet -r requirements.txt
 
+      # ── Ingestion Layer (Watchers 1-4 always run; Watcher 5 is guarded) ───
       - name: "[Watcher 1] Inbox -> Needs_Action"
         run: python watcher_inbox.py
 
@@ -50,39 +53,40 @@ jobs:
       - name: "[Watcher 4] LinkedIn (simulated) -> Needs_Action"
         run: python linkedin_watcher.py
 
-      - name: "[Gmail] Write OAuth files (credentials.json + token.json)"
+      - name: "[Gmail] Write OAuth credential files"
         if: env.GMAIL_OAUTH_ENABLED == 'true'
         shell: bash
         run: |
-          cat > credentials.json <<'EOF'
-          ${{ secrets.GMAIL_CLIENT_SECRET_JSON }}
-          EOF
-
-          cat > token.json <<'EOF'
-          ${{ secrets.GMAIL_TOKEN_JSON }}
-          EOF
-
-          echo "Gmail OAuth files created."
+          # Write secrets to files. JSON values cannot contain single quotes,
+          # so single-quoting the expansion is safe and avoids shell interpretation.
+          echo '${{ secrets.GMAIL_CLIENT_SECRET_JSON }}' > credentials.json
+          echo '${{ secrets.GMAIL_TOKEN_JSON }}' > token.json
+          echo "Gmail OAuth files written."
 
       - name: "[Watcher 5] Gmail -> Inbox (OAuth guarded)"
         if: env.GMAIL_OAUTH_ENABLED == 'true'
         run: python gmail_watcher.py
 
-      - name: "[Agent] Process tasks — generate Plans & Pending_Approval"
+      # ── Agent Layer ────────────────────────────────────────────────────────
+      - name: "[Agent] Process tasks — Plans + Pending_Approval"
         run: python agent.py
 
-      - name: "[Post] LinkedIn: HITL check + post from Approved/ -> Done/"
+      # ── HITL Post Layer ────────────────────────────────────────────────────
+      - name: "[Post] LinkedIn: HITL check + post Approved/ -> Done/"
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
           LINKEDIN_SIMULATED: ${{ secrets.LINKEDIN_SIMULATED || 'true' }}
         run: python post_approved.py
 
+      # ── Commit & Push ──────────────────────────────────────────────────────
       - name: Commit & Push Results
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Stage only pipeline-relevant paths.
+          # credentials.json and token.json are excluded by .gitignore.
           git add \
             Needs_Action/ \
             Pending_Approval/ \
@@ -95,24 +99,55 @@ jobs:
             || true
 
           if git diff --cached --quiet; then
-            echo "No changes to commit."
+            echo "No pipeline changes to commit — skipping push."
             exit 0
           fi
 
           git commit -m "Cloud: Silver agent run $(date -u '+%Y-%m-%d %H:%M UTC')"
-          git pull origin main --rebase
+
+          # Rebase our commit on top of any concurrent pushes, then push.
+          # --autostash protects against any untracked working-tree changes.
+          git pull --rebase --autostash origin main
           git push origin main
 
-      - name: Print Summary
+      # ── Summary ────────────────────────────────────────────────────────────
+      - name: Print Run Summary
+        if: always()
         run: |
-          echo "========== SILVER RUN SUMMARY =========="
-          echo "Tasks processed: $(grep -c 'Processed:' run_log.md || echo 0)"
-          echo "Plans created: $(ls Plans 2>/dev/null | wc -l || echo 0)"
-          echo "Approved files: $(ls Approved 2>/dev/null | wc -l || echo 0)"
-          echo "Done files: $(ls Done 2>/dev/null | wc -l || echo 0)"
-          echo "Errors: $(grep -ci 'error' run_log.md || echo 0)"
-          echo "========================================"
+          echo "============================================"
+          echo "  SILVER AGENT RUN SUMMARY"
+          echo "  $(date -u '+%Y-%m-%d %H:%M UTC')"
+          echo "============================================"
+          # Grep patterns match the exact run_log.md format written by agent.py.
+          TASKS=$(grep -c 'Agent: processed'              run_log.md 2>/dev/null || echo 0)
+          PLANS=$(grep -c 'Agent: plan_created'           run_log.md 2>/dev/null || echo 0)
+          DRAFTS=$(grep -c 'Agent: linkedin_draft_created' run_log.md 2>/dev/null || echo 0)
+          BLOCKS=$(grep -c 'blocked_without_approval'     run_log.md 2>/dev/null || echo 0)
+          POSTED=$(grep -c 'PostApproved: posted'         run_log.md 2>/dev/null || echo 0)
+          ERRORS=$(grep -cE 'Agent: ERROR|PostApproved: api_error|Approve_FAILED' \
+                    run_log.md 2>/dev/null || echo 0)
+          APPROVED=$(ls Approved/ 2>/dev/null | wc -l)
+          DONE=$(ls Done/ 2>/dev/null | wc -l)
 
+          echo "Tasks processed      : $TASKS"
+          echo "Plans created        : $PLANS"
+          echo "LinkedIn drafts      : $DRAFTS"
+          echo "HITL blocks logged   : $BLOCKS"
+          echo "LinkedIn posts sent  : $POSTED"
+          echo "Files in Approved/   : $APPROVED"
+          echo "Files in Done/       : $DONE"
+          echo "Errors logged        : $ERRORS"
+          echo "============================================"
+
+          # Print the latest per-run stats file written by agent.py.
+          LATEST=$(ls -t Logs/summary_*.md 2>/dev/null | head -1)
+          if [ -n "$LATEST" ]; then
+            echo ""
+            echo "Latest agent summary ($LATEST):"
+            cat "$LATEST"
+          fi
+
+      # ── Evidence Upload ────────────────────────────────────────────────────
       - name: Upload Evidence Artifacts
         if: always()
         uses: actions/upload-artifact@v4
