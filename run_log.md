@@ -49479,3 +49479,25 @@ Action: Moved to Needs_Action
 2026-05-22 01:49:23Z - linkedin_post_attempt | mode=simulated | reason=not_configured
 2026-05-22 01:49:23Z - PostApproved: not_configured | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
 2026-05-22 01:49:23Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}
+2026-05-22 05:51:11Z - WhatsApp_Watcher: empty_file
+2026-05-22 05:51:11Z - LinkedIn_Watcher: empty_file
+2026-05-22 05:51:11Z - Gmail: starting
+2026-05-22 05:51:12Z - Gmail: auth_failed
+2026-05-22 05:51:12Z - Agent: started | model=gpt-4o-mini | openai_required=True
+2026-05-22 05:51:12Z - Agent: no_tasks_found
+2026-05-22 05:51:12Z - Agent: done | {'tasks_processed': 0, 'plans_created': 0, 'linkedin_drafts_created': 0, 'fallback_count': 0, 'openai_ok_count': 0, 'errors': 0}
+2026-05-22 05:51:13Z - PostApproved: started
+2026-05-22 05:51:13Z - PostApproved: blocked_without_approval | linkedin_draft_task1_ec417a5820f7.md
+2026-05-22 05:51:13Z - PostApproved: blocked_without_approval | linkedin_draft_task_openai_test_7143767d81c6.md
+2026-05-22 05:51:13Z - PostApproved: blocked_without_approval | linkedin_draft_task_openai_test_bf0c6d5236fa.md
+2026-05-22 05:51:13Z - PostApproved: blocked_without_approval | linkedin_draft_task_real_test_7143767d81c6.md
+2026-05-22 05:51:13Z - PostApproved: blocked_without_approval | linkedin_draft_test_ai_788d586d2538.md
+2026-05-22 05:51:13Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-05-22 05:51:13Z - PostApproved: not_configured | linkedin_draft_li_20260220_042906_1_fae28a47a687.md | kept in Approved/
+2026-05-22 05:51:13Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-05-22 05:51:13Z - PostApproved: not_configured | linkedin_draft_li_20260220_042906_2_73017b347e6a.md | kept in Approved/
+2026-05-22 05:51:13Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-05-22 05:51:13Z - PostApproved: not_configured | linkedin_draft_test_judge_59986181bbdd.md | kept in Approved/
+2026-05-22 05:51:13Z - linkedin_post_attempt | mode=simulated | reason=not_configured
+2026-05-22 05:51:13Z - PostApproved: not_configured | linkedin_draft_test_marketing_d6b334630fa8.md | kept in Approved/
+2026-05-22 05:51:13Z - PostApproved: done | {'found': 4, 'posted': 0, 'skipped_duplicate': 0, 'skipped_not_configured': 4, 'errors': 0}
